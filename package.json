@@ -2,10 +2,10 @@
   "name": "host-profile",
   "version": "1.0.0",
   "description": "the host-profile component for the AirBnb mock app",
-  "main": "server/server.js",
   "scripts": {
-    "start": "node server.js",
-    "react-dev": "webpack -d --watch"
+    "start": "node server/server.js",
+    "react-dev": "webpack -d --watch",
+    "knex-seed": "npx knex migrate:latest; npx knex seed:run"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "express": "^4.16.4",
     "knex": "^0.16.5",
     "pg": "^7.11.0",
+    "react": "^16.8.6",
     "validator": "^10.11.0"
   },
   "devDependencies": {
