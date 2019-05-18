@@ -12,25 +12,24 @@ class App extends React.Component {
       responseTime: "",
       hostUrl: ""
     };
-  };
+  }
   componentDidMount() {
     fetch('http://localhost:3004/host', {
       method: 'GET'
     })
     .then(res => res.json())
     .then(data => {
-      console.log('data', data);
       this.setState({
-        name: data.name,
-        description: data.description,
-        dateJoined: data.dateJoined,
-        responseRate: data.responseRate,
-        responseTime: data.responseTime,
-        hostUrl: data.hostUrl
+        name: data[0].name,
+        description: data[0].description,
+        dateJoined: data[0].dateJoined,
+        responseRate: data[0].responseRate,
+        responseTime: data[0].responseTime,
+        hostUrl: data[0].hostUrl
       });
     })
-    .catch(console.log);
-  };
+    .catch(err => console.log('fetch error', err));
+  }
   render() {
     return (
       <div id="host-profile">HOST!!!!!</div>
