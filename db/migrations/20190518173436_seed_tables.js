@@ -1,18 +1,25 @@
-
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return Promise.all([
     knex.schema.createTable('hosts', (table) => {
       table.increments('id').primary();
       table.string('name');
-      table.string('description');
+      table.string('description', 1000);
+      table.string('interaction', 1000);
       table.string('dateJoined');
       table.string('responseRate');
       table.string('responseTime');
       table.string('hostUrl');
     }),
     knex.schema.createTable('languages', (table) => {
-      table.increments('id');
+      table.increments('id').primary();
       table.string('language');
+    }),
+    knex.schema.createTable('hosts_languages', (table) => {
+      table.increments('id').primary();
+      table.integer('host_id');
+      table.foreign('host_id').references('hosts.id');
+      table.integer('language_id');
+      table.foreign('language_id').references('languages.id');
     }),
     knex.schema.createTable('listings', (table) => {
       table.increments('id').primary();
@@ -29,15 +36,15 @@ exports.up = function(knex, Promise) {
       table.string('state');
       table.string('country');
       table.integer('host_id');
-      table.foreign('host_id')
-        .references('hosts.id');
+      table.foreign('host_id').references('hosts.id');
     })
   ]);
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('listings'),
+    knex.schema.dropTable('hosts_languages'),
     knex.schema.dropTable('languages'),
     knex.schema.dropTable('hosts')
   ]);

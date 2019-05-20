@@ -5,30 +5,37 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 38,
       name: "",
       description: "",
+      interaction: "",
       dateJoined: "",
+      languages: [],
       responseRate: "",
       responseTime: "",
       hostUrl: ""
     };
   }
   componentDidMount() {
-    fetch('http://localhost:3004/host', {
+    fetch(`http://localhost:3004/host/${this.state.id}`, {
       method: 'GET'
     })
     .then(res => res.json())
     .then(data => {
       this.setState({
-        name: data[0].name,
-        description: data[0].description,
-        dateJoined: data[0].dateJoined,
-        responseRate: data[0].responseRate,
-        responseTime: data[0].responseTime,
-        hostUrl: data[0].hostUrl
+        name: data.name,
+        description: data.description,
+        interaction: data.interaction,
+        dateJoined: data.dateJoined,
+        languages: data.languages,
+        responseRate: data.responseRate,
+        responseTime: data.responseTime,
+        hostUrl: data.hostUrl
       });
-    })
-    .catch(err => console.log('fetch error', err));
+    });
+  }
+  contactPage() {
+
   }
   render() {
     const state = this.state;
@@ -44,13 +51,18 @@ class App extends React.Component {
             <div className="desc-heading">Hi, I'm {state.name}</div>
             <div className="description">{state.description}</div>
             <div className="desc-heading">Interaction with guests</div>
-            <div className="description">Add interaction descriptions to data</div>
+            <div className="description">{state.interaction}</div>
           </div>
           <div id="info-box" className="box">
-            <div className="info">Joined in {state.dateJoined}</div>
-            <div className="info">Languages:</div>
-            <div className="info">Response rate: {state.responseRate}</div>
-            <div className="info">Response time: {state.responseTime}</div>
+            <div id="info">
+              <div className="info">Joined in {state.dateJoined}</div>
+              <div className="info">Languages:{state.languages}</div>
+              <div className="info">Response rate: {state.responseRate}</div>
+              <div className="info">Response time: {state.responseTime}</div>
+            </div>
+            <div id="contact-button">
+              <input type="button" onClick={this.contactPage.bind(this)} value="Contact"></input>
+            </div>
           </div>
         </div>
       </div>

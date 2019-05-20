@@ -10,18 +10,31 @@ const port = 3004;
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-app.get('/host', (req, res) => {
+app.get('/host/:id', (req, res) => {
+  let data = {};
   db.from('hosts')
-  .select('name', "description", "dateJoined", "responseRate", "responseTime", "hostUrl")
-  .where('id', 34)
+  .select()
+  .where('id', req.params.id)
   .then((hostData) => {
-    res.status(200).json(hostData);
+    data = JSON.parse(JSON.stringify(hostData[0]));
+    console.log(hostData, '=====', data);
   })
   .catch((err) => {
     res.status(500).json({ err });
   });
+
+  db.from('languages')
+  .innerJoin('hosts_languages', 'languages.id', '=', 'hosts_languages.language_id')
+  .select('language')
+  .where('host_id', req.params.id)
+  .then((languagesArray) => {
+    let langStringsArray = [];
+    languagesArray.map((langObj) => {
+      langStringsArray.push(langObj.language);
+    });
+    data.languages = langStringsArray;
+    res.status(200).json(data);
+  });
 });
 
-app.listen(3004, () => {console.log(`Listening on port ${port}`)});
-
-// Math.ciel(Math.random() * 100)
+app.listen(port, () => {console.log(`Listening on port ${port}`)});

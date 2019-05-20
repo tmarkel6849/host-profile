@@ -1,9 +1,11 @@
-const hostsData = require('../01hosts');
-const langData = require('../03languages');
-const listingsData = require('../02listings');
+const hostsData = require('../hosts');
+const langData = require('../languages');
+const hosts_langData = require('../hosts_langs.js');
+const listingsData = require('../listings');
 
 exports.seed = function(knex, Promise) {
-  return knex('hosts').del()
+  return knex('hosts_languages').del()
+  .then(() => knex('hosts').del())
   .then(() => knex('listings').del())
   .then(() => knex('languages').del())
   .then(() => {
@@ -14,6 +16,11 @@ exports.seed = function(knex, Promise) {
   .then(() => {
     return Promise.all(hostsData.map((host) => {
       return knex('hosts').insert(host);
+    }));
+  })
+  .then(() => {
+    return Promise.all(hosts_langData.map((host_lang) => {
+      return knex('hosts_languages').insert(host_lang);
     }));
   })
   .then(() => {
