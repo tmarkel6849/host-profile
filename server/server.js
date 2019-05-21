@@ -17,7 +17,6 @@ app.get('/host/:id', (req, res) => {
   .where('id', req.params.id)
   .then((hostData) => {
     data = JSON.parse(JSON.stringify(hostData[0]));
-    console.log(hostData, '=====', data);
   })
   .catch((err) => {
     res.status(500).json({ err });
