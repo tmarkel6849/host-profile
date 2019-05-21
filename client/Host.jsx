@@ -74,7 +74,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 97,
+      id: Math.ceil(Math.random() * 100),
       name: "",
       description: "",
       interaction: "",
@@ -114,7 +114,7 @@ class App extends React.Component {
         <MeetYourHost>Meet your host</MeetYourHost>
         <HostInfo>
           <PhotoBox>
-            <HostImage src="https://fake-profile-pictures.s3.amazonaws.com/female1.jpg" title={state.name} alt={state.name}></HostImage>
+            <HostImage src={state.hostUrl} title={state.name} alt={state.name}></HostImage>
             <ScriptName>{state.name}</ScriptName>
           </PhotoBox>
           <InfoContainer>
