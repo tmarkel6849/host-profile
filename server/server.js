@@ -33,7 +33,13 @@ app.get('/host/:id', (req, res) => {
     });
     data.languages = langStringsArray;
     res.status(200).json(data);
+  })
+  .catch((err) => {
+    res.status(500).json({
+      err
+    });
   });
+  ;
 });
 
 app.listen(port, () => {console.log(`Listening on port ${port}`)});
