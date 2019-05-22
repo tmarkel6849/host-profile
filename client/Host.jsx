@@ -203,6 +203,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       id: Math.ceil(Math.random() * 100),
+      // id: -1,
       name: "",
       description: "",
       interaction: "",
@@ -214,22 +215,41 @@ class App extends React.Component {
     };
   }
   componentDidMount() {
-    fetch(`http://localhost:3004/host/${this.state.id}`, {
-      method: 'GET'
-    })
-    .then(res => res.json())
-    .then(data => {
-      this.setState({
-        name: data.name,
-        description: data.description,
-        interaction: data.interaction,
-        dateJoined: data.dateJoined,
-        languages: data.languages,
-        responseRate: data.responseRate,
-        responseTime: data.responseTime,
-        hostUrl: data.hostUrl
+    if (this.state.id !== -1) {
+      fetch(`http://localhost:3004/host/id/${this.state.id}`, {
+        method: 'GET'
+      })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          name: data.name,
+          description: data.description,
+          interaction: data.interaction,
+          dateJoined: data.dateJoined,
+          languages: data.languages,
+          responseRate: data.responseRate,
+          responseTime: data.responseTime,
+          hostUrl: data.hostUrl
+        });
       });
-    });
+    } else if (this.state.name !== "") {
+      fetch(`http://localhost:3004/host/name/${this.state.name}`, {
+        method: 'GET'
+      })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          id: data.id,
+          description: data.description,
+          interaction: data.interaction,
+          dateJoined: data.dateJoined,
+          languages: data.languages,
+          responseRate: data.responseRate,
+          responseTime: data.responseTime,
+          hostUrl: data.hostUrl
+        });
+      });
+    }
   }
   contactPage() {
 
