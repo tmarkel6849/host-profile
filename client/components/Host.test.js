@@ -15,7 +15,7 @@ const mockResponse = {
 };
 
 describe('HostComponent', () => {
-  it('populates state with GET response', done => {
+  it('fetches data and populates state with response', done => {
     const mockSuccessResponse = mockResponse;
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
@@ -23,14 +23,22 @@ describe('HostComponent', () => {
     });
     jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
 
+    expect(global.fetch).not.toHaveBeenCalled();
+
     const wrapper = shallow(<Host id='54' name='Trevino' />);
 
     process.nextTick(() => {
+      expect(global.fetch).toHaveBeenCalledTimes(1);
       expect(global.fetch).toHaveBeenCalledWith('http://localhost:3004/host/id/54', {'method': 'GET'});
       expect(wrapper.state('name')).toBe('Trevino');
       expect(wrapper.state('description')).toBeString();
+      expect(wrapper.state('interaction')).toBeString();
       expect(wrapper.state('dateJoined')).toBe('June 2014');
       expect(wrapper.state('languages')).toContainValue('English');
+      expect(wrapper.state('interaction')).toBeString();
+      expect(wrapper.state('responseRate')).toBe('93%');
+      expect(wrapper.state('responseTime')).toBe('within a day');
+      expect(wrapper.state('hostUrl')).toBeString();
     });
     
     process.nextTick(() => {
