@@ -204,15 +204,15 @@ export default class Host extends React.Component {
     this.state = {
       // id: Math.ceil(Math.random() * 100),
       // id: this.props.id,
-      id: 29,
-      name: "",
-      description: "",
-      interaction: "",
-      dateJoined: "",
+      id: this.props.id || -1,
+      name: this.props.name || '',
+      description: '',
+      interaction: '',
+      dateJoined: '',
       languages: [],
-      responseRate: "",
-      responseTime: "",
-      hostUrl: ""
+      responseRate: '',
+      responseTime: '',
+      hostUrl: ''
     };
   }
   componentDidMount() {
@@ -233,13 +233,12 @@ export default class Host extends React.Component {
             hostUrl: data.hostUrl
           });
         });
-    } else if (this.state.name !== "") {
+    } else if (this.state.name !== '') {
       fetch(`http://localhost:3004/host/name/${this.state.name}`, {
         method: 'GET'
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data);
           this.setState({
             id: data.id,
             description: data.description,
@@ -253,13 +252,10 @@ export default class Host extends React.Component {
         });
     }
   }
-  contactPage() {
-
-  }
   render() {
     const state = this.state;
-    let interactionHeader = state.interaction === "" ? null : <DescHeader>Interaction with guests</DescHeader>;
-    let interaction = state.interaction === "" ? null : <Description>{state.interaction}</Description>;
+    let interactionHeader = state.interaction === '' ? null : <DescHeader>Interaction with guests</DescHeader>;
+    let interaction = state.interaction === '' ? null : <Description>{state.interaction}</Description>;
 
     return (
       <HostProfile>
@@ -296,5 +292,5 @@ export default class Host extends React.Component {
         </HostInfo>
       </HostProfile>
     );
-  };
+  }
 }
