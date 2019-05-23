@@ -24,7 +24,7 @@ const HostProfile = styled.section`
     padding-right: 80px;
   }
 `;
-  const MeetYourHost = styled.div`
+const MeetYourHost = styled.div`
     margin-top: 48px;
     font-size: 24px;
     font-weight: 800;
@@ -36,7 +36,7 @@ const HostProfile = styled.section`
       font-size: 32px;
     }
   `;
-  const HostInfo = styled.section`
+const HostInfo = styled.section`
     display: flex;
     flex-basis: 100%;
     flex-direction: column;
@@ -46,8 +46,8 @@ const HostProfile = styled.section`
       flex-direction: row;
     }
   `;
-    // PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- 
-    const PhotoBoxContainer = styled.div`
+// PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- 
+const PhotoBoxContainer = styled.div`
       flex-basis: 100%;
       max-width: 327px;
       height: fit-content;
@@ -65,14 +65,14 @@ const HostProfile = styled.section`
         flex-basis: 16.667%;
       }
     `;
-      // PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX ---
-      const PhotoBox = styled.div`
+// PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX ---
+const PhotoBox = styled.div`
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .06);
       `;
-        const HostImage = styled.img`
+const HostImage = styled.img`
           width: 100%;
         `;
-        const ScriptName = styled.div`
+const ScriptName = styled.div`
           font-family: 'Dancing Script', cursive;
           font-size: 2em;
           text-align: center;
@@ -80,9 +80,9 @@ const HostProfile = styled.section`
           height: 100px;
           line-height: 100px;
         `;
-        // PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- 
-        // BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
-        const BelowImageContact = styled.button`
+// PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- 
+// BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
+const BelowImageContact = styled.button`
           margin-top: 32px;
           padding: 10px 54px;
           color: #914669;
@@ -100,10 +100,10 @@ const HostProfile = styled.section`
             display: block;
           }
         `;
-        // BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
-    // PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER ---
-    // INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER ---
-    const InfoContainer = styled.section`
+// BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
+// PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER ---
+// INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER ---
+const InfoContainer = styled.section`
       display: flex;
       flex-direction: column;
       line-height: 1.75em;
@@ -126,8 +126,8 @@ const HostProfile = styled.section`
         flex-direction: row;
       }
       `;
-      // DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- 
-      const DescriptionBox = styled.div`
+// DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- 
+const DescriptionBox = styled.div`
         line-height: 1.75;
         height: fit-content;
 
@@ -137,7 +137,7 @@ const HostProfile = styled.section`
           margin-right: 64px;
         }
       `;
-        const HiIm = styled.div`
+const HiIm = styled.div`
           font-size: 16px;
           font-weight: 800;
           
@@ -145,19 +145,19 @@ const HostProfile = styled.section`
             display: none;
           }
         `;
-        const DescHeader = styled.div`
+const DescHeader = styled.div`
           font-size: 16px;
           font-weight: 800;
           margin-top: 32px;
         `;
-        const Description = styled.div`
+const Description = styled.div`
           font-size: 16px;
           font-weight: 400;
           margin-top: 8px;
         `;
-      // DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- 
-      // STATS --- STATS --- STATS --- STATS --- STATS --- STATS --- STATS ---
-      const StatsBox = styled.div`
+// DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- 
+// STATS --- STATS --- STATS --- STATS --- STATS --- STATS --- STATS ---
+const StatsBox = styled.div`
         margin-top: 32px;
 
         @media only screen and (min-width: 1128px) {
@@ -172,9 +172,9 @@ const HostProfile = styled.section`
           padding-right: 12px;
         }
       `;
-      // STATS --- STATS --- STATS --- STATS --- STATS --- STATS --- STATS ---
-        // BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
-        const Contact = styled.button`
+// STATS --- STATS --- STATS --- STATS --- STATS --- STATS --- STATS ---
+// BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
+const Contact = styled.button`
           margin-top: 32px;
           padding: 10px 54px;
           color: #914669;
@@ -190,20 +190,21 @@ const HostProfile = styled.section`
             display: none;
           }
         `;
-        // BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
-    // INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER ---
+// BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
+// INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER ---
 const A = styled.a`
   text-decoration:none;
   cursor: pointer;
   color: #484848;
 `;
 
-class App extends React.Component {
+export default class Host extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: Math.ceil(Math.random() * 100),
-      // id: -1,
+      // id: Math.ceil(Math.random() * 100),
+      // id: this.props.id,
+      id: 29,
       name: "",
       description: "",
       interaction: "",
@@ -219,36 +220,37 @@ class App extends React.Component {
       fetch(`http://localhost:3004/host/id/${this.state.id}`, {
         method: 'GET'
       })
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          name: data.name,
-          description: data.description,
-          interaction: data.interaction,
-          dateJoined: data.dateJoined,
-          languages: data.languages,
-          responseRate: data.responseRate,
-          responseTime: data.responseTime,
-          hostUrl: data.hostUrl
+        .then(res => res.json())
+        .then(data => {
+          this.setState({
+            name: data.name,
+            description: data.description,
+            interaction: data.interaction,
+            dateJoined: data.dateJoined,
+            languages: data.languages,
+            responseRate: data.responseRate,
+            responseTime: data.responseTime,
+            hostUrl: data.hostUrl
+          });
         });
-      });
     } else if (this.state.name !== "") {
       fetch(`http://localhost:3004/host/name/${this.state.name}`, {
         method: 'GET'
       })
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          id: data.id,
-          description: data.description,
-          interaction: data.interaction,
-          dateJoined: data.dateJoined,
-          languages: data.languages,
-          responseRate: data.responseRate,
-          responseTime: data.responseTime,
-          hostUrl: data.hostUrl
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          this.setState({
+            id: data.id,
+            description: data.description,
+            interaction: data.interaction,
+            dateJoined: data.dateJoined,
+            languages: data.languages,
+            responseRate: data.responseRate,
+            responseTime: data.responseTime,
+            hostUrl: data.hostUrl
+          });
         });
-      });
     }
   }
   contactPage() {
@@ -256,9 +258,9 @@ class App extends React.Component {
   }
   render() {
     const state = this.state;
-    let interactionHeader = state.interaction === "" ? null: <DescHeader>Interaction with guests</DescHeader>;
+    let interactionHeader = state.interaction === "" ? null : <DescHeader>Interaction with guests</DescHeader>;
     let interaction = state.interaction === "" ? null : <Description>{state.interaction}</Description>;
-      
+
     return (
       <HostProfile>
         <MeetYourHost>Meet your host</MeetYourHost>
@@ -296,5 +298,3 @@ class App extends React.Component {
     );
   };
 }
-
-ReactDOM.render(<App />, document.getElementById('app'));

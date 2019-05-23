@@ -4,7 +4,7 @@ var SRC_DIR = path.join(__dirname, '/client');
 var DIST_DIR = path.join(__dirname, '/public');
 
 module.exports = {
-  entry: `${SRC_DIR}/Host.jsx`,
+  entry: `${SRC_DIR}/App.jsx`,
   devtool: 'source-map',
   mode: 'development',
   cache: true,
