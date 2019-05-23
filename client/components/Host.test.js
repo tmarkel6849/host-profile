@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import Host from './Host.jsx';
 
 const mockResponse = {
@@ -14,24 +14,31 @@ const mockResponse = {
   'hostUrl': 'https://s3-us-west-1.amazonaws.com/fake-profile-pictures/males3.jpg'
 };
 
+beforeAll(() => {
+  const mockSuccessResponse = mockResponse;
+  const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+  const mockFetchPromise = Promise.resolve({
+    json: () => mockJsonPromise,
+  });
+  return jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
+});
+
+afterAll(() => {
+  global.fetch.mockClear();
+});
+
 describe('HostComponent', () => {
   it('fetches data and populates state with response', done => {
-    const mockSuccessResponse = mockResponse;
-    const mockJsonPromise = Promise.resolve(mockSuccessResponse);
-    const mockFetchPromise = Promise.resolve({
-      json: () => mockJsonPromise,
-    });
-    jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
 
     expect(global.fetch).not.toHaveBeenCalled();
 
-    const wrapper = shallow(<Host id='54' name='Trevino' />);
+    const wrapper = mount(<Host id='54' name='Trevino' />);
 
     process.nextTick(() => {
       expect(global.fetch).toHaveBeenCalledTimes(1);
       expect(global.fetch).toHaveBeenCalledWith('http://localhost:3004/host/id/54', {'method': 'GET'});
       expect(wrapper.state('name')).toBe('Trevino');
-      expect(wrapper.state('description')).toBeString();
+      expect(wrapper.state('description')).not.toBeEmpty();
       expect(wrapper.state('interaction')).toBeString();
       expect(wrapper.state('dateJoined')).toBe('June 2014');
       expect(wrapper.state('languages')).toContainValue('English');
@@ -39,10 +46,19 @@ describe('HostComponent', () => {
       expect(wrapper.state('responseRate')).toBe('93%');
       expect(wrapper.state('responseTime')).toBe('within a day');
       expect(wrapper.state('hostUrl')).toBeString();
+      done();
     });
-    
+  });
+
+  it('contains the proper clickable elements', done => {
+    const wrapper = mount(<Host id='54' name='Trevino' />);
+
     process.nextTick(() => {
-      global.fetch.mockClear();
+      expect(wrapper.containsMatchingElement( <button>CONTACT</button> )).toBeTruthy();
+      expect(wrapper.find('button')).toHaveLength(2);
+      expect(wrapper.find('button#main-button').simulate('click'));
+      expect(wrapper.find('button#below-image-button').simulate('click'));
+      expect(wrapper.find('a#photo-box-link').simulate('click'));
       done();
     });
   });

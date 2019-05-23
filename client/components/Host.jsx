@@ -262,12 +262,12 @@ export default class Host extends React.Component {
         <MeetYourHost>Meet your host</MeetYourHost>
         <HostInfo>
           <PhotoBoxContainer>
-            <PhotoBox><A href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            <PhotoBox><A id='photo-box-link' href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
               <HostImage src={state.hostUrl} title={state.name} alt={state.name}></HostImage>
               <ScriptName>{state.name}</ScriptName></A>
             </PhotoBox>
             <A href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-              <BelowImageContact >CONTACT</BelowImageContact>
+              <BelowImageContact id='below-image-button'>CONTACT</BelowImageContact>
             </A>
           </PhotoBoxContainer>
           <InfoContainer>
@@ -285,7 +285,7 @@ export default class Host extends React.Component {
                 <div className="info">Response time: {state.responseTime}</div>
               </div>
               <A href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                <Contact >CONTACT</Contact>
+                <Contact id='main-button'>CONTACT</Contact>
               </A>
             </StatsBox>
           </InfoContainer>
