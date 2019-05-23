@@ -204,15 +204,15 @@ export default class Host extends React.Component {
     this.state = {
       // id: Math.ceil(Math.random() * 100),
       // id: this.props.id,
-      id: 29,
-      name: "",
-      description: "",
-      interaction: "",
-      dateJoined: "",
+      id: this.props.id || -1,
+      name: this.props.name || '',
+      description: '',
+      interaction: '',
+      dateJoined: '',
       languages: [],
-      responseRate: "",
-      responseTime: "",
-      hostUrl: ""
+      responseRate: '',
+      responseTime: '',
+      hostUrl: ''
     };
   }
   componentDidMount() {
@@ -233,13 +233,12 @@ export default class Host extends React.Component {
             hostUrl: data.hostUrl
           });
         });
-    } else if (this.state.name !== "") {
+    } else if (this.state.name !== '') {
       fetch(`http://localhost:3004/host/name/${this.state.name}`, {
         method: 'GET'
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data);
           this.setState({
             id: data.id,
             description: data.description,
@@ -253,25 +252,22 @@ export default class Host extends React.Component {
         });
     }
   }
-  contactPage() {
-
-  }
   render() {
     const state = this.state;
-    let interactionHeader = state.interaction === "" ? null : <DescHeader>Interaction with guests</DescHeader>;
-    let interaction = state.interaction === "" ? null : <Description>{state.interaction}</Description>;
+    let interactionHeader = state.interaction === '' ? null : <DescHeader>Interaction with guests</DescHeader>;
+    let interaction = state.interaction === '' ? null : <Description>{state.interaction}</Description>;
 
     return (
       <HostProfile>
         <MeetYourHost>Meet your host</MeetYourHost>
         <HostInfo>
           <PhotoBoxContainer>
-            <PhotoBox><A href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            <PhotoBox><A id='photo-box-link' href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
               <HostImage src={state.hostUrl} title={state.name} alt={state.name}></HostImage>
               <ScriptName>{state.name}</ScriptName></A>
             </PhotoBox>
             <A href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-              <BelowImageContact >CONTACT</BelowImageContact>
+              <BelowImageContact id='below-image-button'>CONTACT</BelowImageContact>
             </A>
           </PhotoBoxContainer>
           <InfoContainer>
@@ -289,12 +285,12 @@ export default class Host extends React.Component {
                 <div className="info">Response time: {state.responseTime}</div>
               </div>
               <A href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                <Contact >CONTACT</Contact>
+                <Contact id='main-button'>CONTACT</Contact>
               </A>
             </StatsBox>
           </InfoContainer>
         </HostInfo>
       </HostProfile>
     );
-  };
+  }
 }

@@ -6,13 +6,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: Math.ceil(Math.random() * 100)
+      'id': 91,
+      'name': 'Trevino'
     };
   }
 
   render() {
     return (
-      <Host id={this.state.id}/>
+      <Host id={this.state.id} name={this.state.name}/>
     );
   }
 }
