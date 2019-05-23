@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import Host from './Host.jsx';
+import Host from '../client/components/Host.jsx';
 
 const mockResponse = {
   'id': 54,
