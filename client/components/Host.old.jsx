@@ -1,6 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import PhotoBoxContainer from './PhotoBoxContainer.jsx';
 
 const HostProfile = styled.section`
   font-family: 'Roboto', sans-serif;
@@ -47,6 +47,61 @@ const HostInfo = styled.section`
     }
   `;
 // PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- 
+const PhotoBoxContainer = styled.div`
+      flex-basis: 100%;
+      max-width: 327px;
+      height: fit-content;
+      
+      @media only screen and (min-width: 744px) {
+        flex-basis: 33.333%;
+      }
+      
+      @media only screen and (min-width: 1128px) {
+        flex-basis: 25%;
+        max-width: 302px;
+      }
+      
+      @media only screen and (min-width: 1440px) {
+        flex-basis: 16.667%;
+      }
+    `;
+// PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX ---
+const PhotoBox = styled.div`
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .06);
+      `;
+const HostImage = styled.img`
+          width: 100%;
+        `;
+const ScriptName = styled.div`
+          font-family: 'Dancing Script', cursive;
+          font-size: 2em;
+          text-align: center;
+          width: 100%;
+          height: 100px;
+          line-height: 100px;
+        `;
+// PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- PHOTOBOX --- 
+// BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
+const BelowImageContact = styled.button`
+          margin-top: 32px;
+          padding: 10px 54px;
+          color: #914669;
+          font-weight: 600;
+          width: 100%;
+          background: transparent;
+          border-color: #914669;
+          border-style: solid;
+          border-width: 2px;
+          border-radius: 4px;
+          cursor: pointer;
+          display: none;
+
+          @media only screen and (min-width: 744px) and (max-width: 1127px) {
+            display: block;
+          }
+        `;
+// BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
+// PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER ---
 // INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER ---
 const InfoContainer = styled.section`
       display: flex;
@@ -147,6 +202,8 @@ export default class Host extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // id: Math.ceil(Math.random() * 100),
+      // id: this.props.id,
       id: this.props.id || -1,
       name: this.props.name || '',
       description: '',
@@ -175,35 +232,59 @@ export default class Host extends React.Component {
             responseTime: data.responseTime,
             hostUrl: data.hostUrl
           });
-        })
-        .catch(err => console.log(err));
+        });
+    } else if (this.state.name !== '') {
+      fetch(`http://localhost:3004/host/name/${this.state.name}`, {
+        method: 'GET'
+      })
+        .then(res => res.json())
+        .then(data => {
+          this.setState({
+            id: data.id,
+            description: data.description,
+            interaction: data.interaction,
+            dateJoined: data.dateJoined,
+            languages: data.languages,
+            responseRate: data.responseRate,
+            responseTime: data.responseTime,
+            hostUrl: data.hostUrl
+          });
+        });
     }
   }
   render() {
     const state = this.state;
     let interactionHeader = state.interaction === '' ? null : <DescHeader>Interaction with guests</DescHeader>;
-    let interaction = state.interaction === '' ? null : <Description id='interaction'>{state.interaction}</Description>;
+    let interaction = state.interaction === '' ? null : <Description>{state.interaction}</Description>;
 
     return (
       <HostProfile>
         <MeetYourHost>Meet your host</MeetYourHost>
         <HostInfo>
-          <PhotoBoxContainer name={state.name} hostUrl={state.hostUrl}/>
+          <PhotoBoxContainer>
+            <PhotoBox><A id='photo-box-link' href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+              <HostImage src={state.hostUrl} title={state.name} alt={state.name}></HostImage>
+              <ScriptName>{state.name}</ScriptName></A>
+            </PhotoBox>
+            <A href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+              <BelowImageContact id='below-image-button'>CONTACT</BelowImageContact>
+            </A>
+          </PhotoBoxContainer>
           <InfoContainer>
             <DescriptionBox>
-              <HiIm id='hi-im'>Hi, I'm {state.name}</HiIm>
-              <Description id='description'>{state.description}</Description>
+              <HiIm>Hi, I'm {state.name}</HiIm>
+              <Description>{state.description}</Description>
               {interactionHeader}
               {interaction}
             </DescriptionBox>
             <StatsBox>
-              <div id='stats'>
-                <div id='joined-in'>Joined in {state.dateJoined}</div>
-                <div id='languages'>Languages: {state.languages.join(', ')}</div>
-                <div id='responseRate'>Response rate: {state.responseRate}</div>
-                <div id='responseTime'>Response time: {state.responseTime}</div>
+              <div id="info">
+                <div className="info">Joined in {state.dateJoined}</div>
+                <div className="info">Languages: {state.languages.join(', ')}</div>
+                <div className="info">Response rate: {state.responseRate}</div>
+                <div className="info">Response time: {state.responseTime}</div>
               </div>
-              <A href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>
+              <A href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
                 <Contact id='main-button'>CONTACT</Contact>
               </A>
             </StatsBox>
