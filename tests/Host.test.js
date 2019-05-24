@@ -50,48 +50,40 @@ describe('HostComponent', () => {
         done();
       });
     });
-    it('receives a non-empty object back from the fetch', done => {
-      const wrapper = shallow( <Host id={54} /> );
+  });
+  describe('Setting state from fetched data', () => {
+    it('sets all Host state values from fetch response', done => {
+      const wrapper = shallow(<Host id={54} />);
       process.nextTick(() => {
-        expect(wrapper.state()).toBeObject();
-        expect(wrapper.state()).not.toBeEmpty();
+        expect(wrapper.state('name')).toBe('Trevino');
+        expect(wrapper.state('description')).not.toBeEmpty();
+        expect(wrapper.state('interaction')).toBeString();
+        expect(wrapper.state('dateJoined')).toBe('June 2014');
+        expect(wrapper.state('languages')).toContainValue('English');
+        expect(wrapper.state('responseRate')).toBe('93%');
+        expect(wrapper.state('responseTime')).toBe('within a day');
+        expect(wrapper.state('hostUrl')).not.toBeEmpty();
         done();
       });
     });
   });
-  // it('fetches data and populates state with response', done => {
-
-  //   expect(global.fetch).not.toHaveBeenCalled();
-
-  //   const wrapper = mount(<Host id={54} name='Trevino' />);
-
-  //   process.nextTick(() => {
-  //     expect(global.fetch).toHaveBeenCalledTimes(1);
-  //     expect(global.fetch).toHaveBeenCalledWith('http://localhost:3004/host/id/54', {'method': 'GET'});
-  //     expect(wrapper.state('name')).toBe('Trevino');
-  //     expect(wrapper.state('description')).not.toBeEmpty();
-  //     expect(wrapper.state('interaction')).toBeString();
-  //     expect(wrapper.state('dateJoined')).toBe('June 2014');
-  //     expect(wrapper.state('languages')).toContainValue('English');
-  //     expect(wrapper.state('interaction')).toBeString();
-  //     expect(wrapper.state('responseRate')).toBe('93%');
-  //     expect(wrapper.state('responseTime')).toBe('within a day');
-  //     expect(wrapper.state('hostUrl')).toBeString();
-  //     done();
-  //   });
-  // });
-
-  // it('contains the proper clickable elements', done => {
-  //   const wrapper = mount(<Host id='54' name='Trevino' />);
-
-  //   process.nextTick(() => {
-  //     expect(wrapper.containsMatchingElement( <button>CONTACT</button> )).toBeTruthy();
-  //     expect(wrapper.find('button')).toHaveLength(2);
-  //     expect(wrapper.find('button#main-button').simulate('click'));
-  //     expect(wrapper.find('button#below-image-button').simulate('click'));
-  //     expect(wrapper.find('a#photo-box-link').simulate('click'));
-  //     done();
-  //   });
-  // });
-
+  describe('Rendering the component', () => {
+    it('renders with state-fed values', done => {
+      const wrapper = mount(<Host id={54} />);
+      process.nextTick(() => {
+        expect(wrapper.find('div#hi-im').text()).toEqual('Hi, I\'m Trevino');
+        expect(wrapper.find('div#description').text()).toEqual(mockResponse.description);
+        expect(wrapper.find('div#joined-in').text()).toEqual(`Joined in ${mockResponse.dateJoined}`);
+        done();
+      });
+    });
+    it('renders the correct clickable elements', done => {
+      const wrapper = mount(<Host id={54} />);
+      process.nextTick(() => {
+        expect(wrapper.containsMatchingElement( <button>CONTACT</button> )).toBeTruthy();
+        expect(wrapper.find('button')).toHaveLength(2);
+        done();
+      });
+    });
+  });
 });

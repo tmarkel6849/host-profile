@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PhotoBoxContainer from './PhotoBoxContainer.jsx'
+import PhotoBoxContainer from './PhotoBoxContainer.jsx';
 
 const HostProfile = styled.section`
   font-family: 'Roboto', sans-serif;
@@ -147,8 +147,6 @@ export default class Host extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // id: Math.ceil(Math.random() * 100),
-      // id: this.props.id,
       id: this.props.id || -1,
       name: this.props.name || '',
       description: '',
@@ -178,13 +176,13 @@ export default class Host extends React.Component {
             hostUrl: data.hostUrl
           });
         })
-        .catch(err => console.log);
+        .catch(err => console.log(err));
     }
   }
   render() {
     const state = this.state;
     let interactionHeader = state.interaction === '' ? null : <DescHeader>Interaction with guests</DescHeader>;
-    let interaction = state.interaction === '' ? null : <Description>{state.interaction}</Description>;
+    let interaction = state.interaction === '' ? null : <Description id='interaction'>{state.interaction}</Description>;
 
     return (
       <HostProfile>
@@ -193,19 +191,19 @@ export default class Host extends React.Component {
           <PhotoBoxContainer name={state.name} hostUrl={state.hostUrl}/>
           <InfoContainer>
             <DescriptionBox>
-              <HiIm>Hi, I'm {state.name}</HiIm>
-              <Description>{state.description}</Description>
+              <HiIm id='hi-im'>Hi, I'm {state.name}</HiIm>
+              <Description id='description'>{state.description}</Description>
               {interactionHeader}
               {interaction}
             </DescriptionBox>
             <StatsBox>
-              <div id="info">
-                <div className="info">Joined in {state.dateJoined}</div>
-                <div className="info">Languages: {state.languages.join(', ')}</div>
-                <div className="info">Response rate: {state.responseRate}</div>
-                <div className="info">Response time: {state.responseTime}</div>
+              <div id='stats'>
+                <div id='joined-in'>Joined in {state.dateJoined}</div>
+                <div id='languages'>Languages: {state.languages.join(', ')}</div>
+                <div id='responseRate'>Response rate: {state.responseRate}</div>
+                <div id='responseTime'>Response time: {state.responseTime}</div>
               </div>
-              <A href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+              <A href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>
                 <Contact id='main-button'>CONTACT</Contact>
               </A>
             </StatsBox>
