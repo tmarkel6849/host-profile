@@ -69,19 +69,23 @@ describe('HostComponent', () => {
   });
   describe('Rendering the component', () => {
     it('renders with state-fed values', done => {
-      const wrapper = mount(<Host id={54} />);
+      const wrap = mount(<Host id={54} />);
       process.nextTick(() => {
-        expect(wrapper.find('div#hi-im').text()).toEqual('Hi, I\'m Trevino');
-        expect(wrapper.find('div#description').text()).toEqual(mockResponse.description);
-        expect(wrapper.find('div#joined-in').text()).toEqual(`Joined in ${mockResponse.dateJoined}`);
+        expect(wrap.find('div#hi-im').text()).toEqual('Hi, I\'m Trevino');
+        expect(wrap.find('div#description').text()).toEqual(mockResponse.description);
+        expect(wrap.find('div#interaction').text()).toEqual(mockResponse.interaction);
+        expect(wrap.find('div#languages').text()).toEqual(`Languages: ${mockResponse.languages.join(', ')}`);
+        expect(wrap.find('div#joined-in').text()).toEqual(`Joined in ${mockResponse.dateJoined}`);
+        expect(wrap.find('div#response-rate').text()).toEqual(`Response rate: ${mockResponse.responseRate}`);
+        expect(wrap.find('div#response-time').text()).toEqual(`Response time: ${mockResponse.responseTime}`);
         done();
       });
     });
     it('renders the correct clickable elements', done => {
-      const wrapper = mount(<Host id={54} />);
+      const wrap = mount(<Host id={54} />);
       process.nextTick(() => {
-        expect(wrapper.containsMatchingElement( <button>CONTACT</button> )).toBeTruthy();
-        expect(wrapper.find('button')).toHaveLength(2);
+        expect(wrap.containsMatchingElement( <button>CONTACT</button> )).toBeTruthy();
+        expect(wrap.find('button')).toHaveLength(2);
         done();
       });
     });

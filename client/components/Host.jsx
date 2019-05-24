@@ -41,6 +41,7 @@ const HostInfo = styled.section`
     flex-basis: 100%;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
 
     @media only screen and (min-width: 744px) {
       flex-direction: row;
@@ -89,13 +90,18 @@ const HiIm = styled.div`
           @media only screen and (max-width: 744px) {
             display: none;
           }
+          `;
+const Description = styled.div`
+          font-size: 16px;
+          font-weight: 400;
+          margin-top: 8px;
         `;
-const DescHeader = styled.div`
+const InterHeader = styled.div`
           font-size: 16px;
           font-weight: 800;
           margin-top: 32px;
         `;
-const Description = styled.div`
+const Interaction = styled.div`
           font-size: 16px;
           font-weight: 400;
           margin-top: 8px;
@@ -180,9 +186,8 @@ export default class Host extends React.Component {
     }
   }
   render() {
-    const state = this.state;
-    let interactionHeader = state.interaction === '' ? null : <DescHeader>Interaction with guests</DescHeader>;
-    let interaction = state.interaction === '' ? null : <Description id='interaction'>{state.interaction}</Description>;
+    let state = JSON.parse(JSON.stringify(this.state));
+    const interHeaderText = state.interaction === '' ? '' : 'Interaction with guests';
 
     return (
       <HostProfile>
@@ -193,15 +198,15 @@ export default class Host extends React.Component {
             <DescriptionBox>
               <HiIm id='hi-im'>Hi, I'm {state.name}</HiIm>
               <Description id='description'>{state.description}</Description>
-              {interactionHeader}
-              {interaction}
+              <InterHeader id='interact-header'>{interHeaderText}</InterHeader>
+              <Interaction id='interaction'>{state.interaction}</Interaction>
             </DescriptionBox>
             <StatsBox>
               <div id='stats'>
                 <div id='joined-in'>Joined in {state.dateJoined}</div>
                 <div id='languages'>Languages: {state.languages.join(', ')}</div>
-                <div id='responseRate'>Response rate: {state.responseRate}</div>
-                <div id='responseTime'>Response time: {state.responseTime}</div>
+                <div id='response-rate'>Response rate: {state.responseRate}</div>
+                <div id='response-time'>Response time: {state.responseTime}</div>
               </div>
               <A href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>
                 <Contact id='main-button'>CONTACT</Contact>
