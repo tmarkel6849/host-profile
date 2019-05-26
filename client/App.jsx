@@ -6,7 +6,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      'id': Math.ceil(Math.random() * 100)
+      // 'id': Math.ceil(Math.random() * 100)
+      'id': 5
     };
   }
 
