@@ -28,6 +28,7 @@ const InterHeader = styled.div`
   font-size: 16px;
   font-weight: 800;
   margin-top: 32px;
+  display: ${props => props.show ? 'block' : 'none'};
 `;
 const Interaction = styled.div`
   font-size: 16px;
@@ -36,23 +37,13 @@ const Interaction = styled.div`
 `;
 
 export default function DescriptionBox(props) {
-  if (props.interaction === '') {
-    return (
-      <Container>
-        <HiIm id='hi-im'>Hi, I'm {props.name}</HiIm>
-        <Description id='description'>{props.description}</Description>
-        <CoHosts coHosts={props.coHosts} />
-      </Container>
-    );
-  } else {
-    return (
-      <Container>
-        <HiIm id='hi-im'>Hi, I'm {props.name}</HiIm>
-        <Description id='description'>{props.description}</Description>
-        <InterHeader id='interact-header'>Interaction with guests</InterHeader>
-        <Interaction id='interaction'>{props.interaction}</Interaction>
-        <CoHosts coHosts={props.coHosts} />
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <HiIm id='hi-im'>Hi, I'm {props.name}</HiIm>
+      <Description id='description'>{props.description}</Description>
+      <InterHeader id='interact-header' show={props.interaction === '' ? false : true}>Interaction with guests</InterHeader>
+      <Interaction id='interaction' show={props.interaction === '' ? false : true}>{props.interaction}</Interaction>
+      <CoHosts coHosts={props.coHosts} />
+    </Container>
+  );
 }
