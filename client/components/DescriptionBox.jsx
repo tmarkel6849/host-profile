@@ -2,40 +2,38 @@ import React from 'react';
 import styled from 'styled-components';
 import CoHosts from './CoHosts.jsx';
 
-// DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- 
 const Container = styled.div`
-        line-height: 1.75;
-        height: fit-content;
+  line-height: 1.75;
+  height: fit-content;
 
-        @media only screen and (min-width: 1128px) {
-          flex-basis: 66.667%;
-          margin-right: 64px;
-        }
-      `;
+  @media only screen and (min-width: 1128px) {
+    flex-basis: 66.667%;
+    margin-right: 64px;
+  }
+`;
 const HiIm = styled.div`
-          font-size: 16px;
-          font-weight: 800;
-          
-          @media only screen and (max-width: 744px) {
-            display: none;
-          }
-          `;
+  font-size: 16px;
+  font-weight: 800;
+  
+  @media only screen and (max-width: 744px) {
+    display: none;
+  }
+`;
 const Description = styled.div`
-          font-size: 16px;
-          font-weight: 400;
-          margin-top: 8px;
-        `;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 8px;
+`;
 const InterHeader = styled.div`
-          font-size: 16px;
-          font-weight: 800;
-          margin-top: 32px;
-        `;
+  font-size: 16px;
+  font-weight: 800;
+  margin-top: 32px;
+`;
 const Interaction = styled.div`
-          font-size: 16px;
-          font-weight: 400;
-          margin-top: 8px;
-        `;
-// DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION ---
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 8px;
+`;
 
 export default function DescriptionBox(props) {
   if (props.interaction === '') {

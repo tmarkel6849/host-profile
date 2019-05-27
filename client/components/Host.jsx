@@ -50,8 +50,6 @@ const HostInfo = styled.section`
     align-items: flex-start;
   }
 `;
-// PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- 
-// INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER ---
 const InfoContainer = styled.section`
   display: flex;
   flex-direction: column;
@@ -75,7 +73,6 @@ const InfoContainer = styled.section`
     flex-direction: row;
   }
 `;
-// INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER ---
 
 export default class Host extends React.Component {
   constructor(props) {
