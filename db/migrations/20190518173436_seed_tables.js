@@ -2,12 +2,13 @@ exports.up = function (knex, Promise) {
   return Promise.all([
     knex.schema.createTable('hosts', (table) => {
       table.increments('id').primary();
-      table.string('name');
+      table.string('name', 60);
       table.string('description', 1000);
       table.string('interaction', 1000);
-      table.string('dateJoined');
-      table.string('responseRate');
-      table.string('responseTime');
+      table.json('coHosts');
+      table.string('dateJoined', 16);
+      table.string('responseRate', 4);
+      table.string('responseTime', 40);
       table.string('hostUrl');
     }),
     knex.schema.createTable('languages', (table) => {

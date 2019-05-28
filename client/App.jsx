@@ -7,6 +7,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       'id': Math.ceil(Math.random() * 100)
+      // 'id': 1 // no co-hosts
+      // 'id': 9 // one co-host
+      // 'id': 5 // two co-hosts
     };
   }
 

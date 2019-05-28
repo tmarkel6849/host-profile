@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import PhotoBoxContainer from './PhotoBoxContainer.jsx';
+import DescriptionBox from './DescriptionBox.jsx';
+import StatsBox from './StatsBox.jsx';
 
 const HostProfile = styled.section`
   font-family: 'Roboto', sans-serif;
@@ -25,128 +27,51 @@ const HostProfile = styled.section`
   }
 `;
 const MeetYourHost = styled.div`
-    margin-top: 48px;
-    font-size: 24px;
-    font-weight: 800;
-    line-height: 40px;
-    margin-bottom: 32px;
-    flex-basis: 100%;
+  margin-top: 48px;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 40px;
+  margin-bottom: 32px;
+  flex-basis: 100%;
 
-    @media only screen and (min-width: 744px) {
-      font-size: 32px;
-    }
-  `;
+  @media only screen and (min-width: 744px) {
+    font-size: 32px;
+  }
+`;
 const HostInfo = styled.section`
-    display: flex;
-    flex-basis: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  flex-basis: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 
-    @media only screen and (min-width: 744px) {
-      flex-direction: row;
-    }
-  `;
-// PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- PHOTOBOXCONTAINER --- 
-// INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER ---
+  @media only screen and (min-width: 744px) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+`;
 const InfoContainer = styled.section`
-      display: flex;
-      flex-direction: column;
-      line-height: 1.75em;
-      flex-basis: 100%;
-      margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.75em;
+  flex-basis: 100%;
+  margin-top: 32px;
 
-      @media only screen and (min-width: 744px) {
-        flex-basis: 66.667%;
-        margin-left: 16px;
-        margin-top: 0;
-      }
+  @media only screen and (min-width: 744px) {
+    flex-basis: 66.667%;
+    margin-left: 24px;
+    margin-top: 0;
+  }
 
-      @media only screen and (min-width: 1128px) {
-        flex-basis: 75%;
-        flex-direction: row;
-      }
-      
-      @media only screen and (min-width: 1440px) {
-        flex-basis: 83.333%;
-        flex-direction: row;
-      }
-      `;
-// DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- 
-const DescriptionBox = styled.div`
-        line-height: 1.75;
-        height: fit-content;
-
-        @media only screen and (min-width: 1128px) {
-          flex-basis: 66.667%;
-          margin-left: 32px;
-          margin-right: 64px;
-        }
-      `;
-const HiIm = styled.div`
-          font-size: 16px;
-          font-weight: 800;
-          
-          @media only screen and (max-width: 744px) {
-            display: none;
-          }
-          `;
-const Description = styled.div`
-          font-size: 16px;
-          font-weight: 400;
-          margin-top: 8px;
-        `;
-const InterHeader = styled.div`
-          font-size: 16px;
-          font-weight: 800;
-          margin-top: 32px;
-        `;
-const Interaction = styled.div`
-          font-size: 16px;
-          font-weight: 400;
-          margin-top: 8px;
-        `;
-// DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- DESCRIPTION --- 
-// STATS --- STATS --- STATS --- STATS --- STATS --- STATS --- STATS ---
-const StatsBox = styled.div`
-        margin-top: 32px;
-
-        @media only screen and (min-width: 1128px) {
-          flex-basis: 33.333%;
-          margin-left: -24px;
-          margin-top: 0;
-        }
-
-        @media only screen and (min-width: 1440px) {
-          margin-left: 11.111%;
-          padding-left: 12px;
-          padding-right: 12px;
-        }
-      `;
-// STATS --- STATS --- STATS --- STATS --- STATS --- STATS --- STATS ---
-// BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
-const Contact = styled.button`
-          margin-top: 32px;
-          padding: 10px 54px;
-          color: #914669;
-          font-weight: 600;
-          background: transparent;
-          border-color: #914669;
-          border-style: solid;
-          border-width: 2px;
-          border-radius: 4px;
-          cursor: pointer;
-
-          @media only screen and (min-width: 744px) and (max-width: 1127px) {
-            display: none;
-          }
-        `;
-// BUTTON --- BUTTON --- BUTTON --- BUTTON --- BUTTON --- 
-// INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER --- INFOCONTAINER ---
-const A = styled.a`
-  text-decoration:none;
-  cursor: pointer;
-  color: #484848;
+  @media only screen and (min-width: 1128px) {
+    flex-basis: 75%;
+    flex-direction: row;
+  }
+  
+  @media only screen and (min-width: 1440px) {
+    flex-basis: 83.333%;
+    flex-direction: row;
+  }
 `;
 
 export default class Host extends React.Component {
@@ -154,9 +79,10 @@ export default class Host extends React.Component {
     super(props);
     this.state = {
       id: this.props.id || -1,
-      name: this.props.name || '',
+      name: '',
       description: '',
       interaction: '',
+      coHosts: {},
       dateJoined: '',
       languages: [],
       responseRate: '',
@@ -175,6 +101,7 @@ export default class Host extends React.Component {
             name: data.name,
             description: data.description,
             interaction: data.interaction,
+            coHosts: data.coHosts,
             dateJoined: data.dateJoined,
             languages: data.languages,
             responseRate: data.responseRate,
@@ -187,31 +114,31 @@ export default class Host extends React.Component {
   }
   render() {
     let state = JSON.parse(JSON.stringify(this.state));
-    const interHeaderText = state.interaction === '' ? '' : 'Interaction with guests';
+    const length = Object.keys(state.coHosts).length;
+
+    let greeting = 'Meet your host';
+    if (length > 0) {
+      greeting = 'Meet your hosts';
+    }
 
     return (
       <HostProfile>
-        <MeetYourHost>Meet your host</MeetYourHost>
+        <MeetYourHost>{greeting}</MeetYourHost>
         <HostInfo>
-          <PhotoBoxContainer name={state.name} hostUrl={state.hostUrl}/>
+          <PhotoBoxContainer
+            name={state.name}
+            hostUrl={state.hostUrl} />
           <InfoContainer>
-            <DescriptionBox>
-              <HiIm id='hi-im'>Hi, I'm {state.name}</HiIm>
-              <Description id='description'>{state.description}</Description>
-              <InterHeader id='interact-header'>{interHeaderText}</InterHeader>
-              <Interaction id='interaction'>{state.interaction}</Interaction>
-            </DescriptionBox>
-            <StatsBox>
-              <div id='stats'>
-                <div id='joined-in'>Joined in {state.dateJoined}</div>
-                <div id='languages'>Languages: {state.languages.join(', ')}</div>
-                <div id='response-rate'>Response rate: {state.responseRate}</div>
-                <div id='response-time'>Response time: {state.responseTime}</div>
-              </div>
-              <A href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>
-                <Contact id='main-button'>CONTACT</Contact>
-              </A>
-            </StatsBox>
+            <DescriptionBox
+              name={state.name}
+              description={state.description}
+              interaction={state.interaction}
+              coHosts={state.coHosts} />
+            <StatsBox 
+              dateJoined={state.dateJoined}
+              languages={state.languages}
+              responseRate={state.responseRate}
+              responseTime={state.responseTime} />
           </InfoContainer>
         </HostInfo>
       </HostProfile>
