@@ -39,7 +39,7 @@ describe('HostComponent', () => {
     it('calls the fetch with correct path for given id', done => {
       const wrapper = shallow(<Host id={54} />);
       process.nextTick(() => {
-        expect(global.fetch).toHaveBeenCalledWith('http://localhost:3004/host/id/54', {'method': 'GET'});
+        expect(global.fetch).toHaveBeenCalledWith('http://localhost:3005/host/id/54', {'method': 'GET'});
         done();
       });
     });
