@@ -92,7 +92,7 @@ export default class Host extends React.Component {
   }
   componentDidMount() {
     if (this.state.id !== -1) {
-      fetch(`http://localhost:3004/host/id/${this.state.id}`, {
+      fetch(`http://localhost:3005/host/id/${this.state.id}`, {
         method: 'GET'
       })
         .then(res => res.json())
