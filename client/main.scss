@@ -33,6 +33,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+        margin-bottom: 48px;
         @media only screen and (min-width: 744px) {
             flex-direction: row;
             align-items: flex-start;
@@ -221,5 +222,10 @@
                 }
             }
         }
+    }
+    #divider {
+        border-bottom-width: 1px;
+        border-bottom-color: #EBEBEB;
+        border-bottom-style: solid;
     }
 }

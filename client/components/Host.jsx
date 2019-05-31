@@ -70,6 +70,7 @@ export default class Host extends React.Component {
               responseTime={state.responseTime} />
           </div>
         </div>
+        <div id='divider'></div>
       </div>
     );
   }
