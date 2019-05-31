@@ -3,7 +3,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://ronniejimmy:rpropri@localhost/airbnb',
+    connection: 'postgres://rpropri:rpropri@localhost/airbnb',
     migrations: {
       directory: __dirname + '/db/migrations',
     },

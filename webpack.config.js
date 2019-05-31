@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 var SRC_DIR = path.join(__dirname, '/client');
 var DIST_DIR = path.join(__dirname, '/public');
 
@@ -14,13 +13,11 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.jsx?/,
-      include: SRC_DIR,
-      exclude: /node.modules/,
+      test: /\.s?css$/,
+      use: ['style-loader', 'css-loader', 'sass-loader']}
+      ,{
+      test: /\.jsx?$/,
       loader: 'babel-loader',
-      query: {
-        presets: ['@babel/preset-env', '@babel/preset-react']
-      }
     }, ]
   },
 };
