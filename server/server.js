@@ -1,4 +1,4 @@
-const environment = 'production';
+const environment = 'development';
 const configuration = require('../knexfile')[environment];
 const db = require('knex')(configuration);
 const express = require('express');
@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-app.get('http://localhost:3005/host/id/:id', (req, res) => {
+app.get('/host/id/:id', (req, res) => {
   let data = {};
   db.from('hosts')
     .select()
