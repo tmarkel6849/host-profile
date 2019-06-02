@@ -1,0 +1,6 @@
+.circleci
+client
+db
+.git
+node_modules
+npm-debug.log
