@@ -1,25 +1,14 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Host from '../client/components/Host.jsx';
-
-const mockResponse = {
-  'id': 54,
-  'name': 'Trevino',
-  'description': 'Tashia and I are both former educators that work hard to play hard. We are easy-going, outdoor-loving people and love learning other peoples\' stories. We get out of town most weekends and can often be found with a great cup of coffee or a cold IPA in our hands. We are passionate about sharing our love of the outdoors with others as much as possible, but when we are home, we need a comfortable place to lay our heads.',
-  'interaction': 'Your host will be on the property and available for anything you need during your stay.',
-  'dateJoined': 'June 2014',
-  'languages': ['English'],
-  'responseRate': '93%',
-  'responseTime': 'within a day',
-  'hostUrl': 'https://s3-us-west-1.amazonaws.com/fake-profile-pictures/males3.jpg'
-};
+import response from './mockResponses';
 
 beforeAll(() => {
-  const mockJsonPromise = Promise.resolve(mockResponse);
-  const mockFetchPromise = Promise.resolve({
-    json: () => mockJsonPromise,
+  const mockWithoutCoHost = Promise.resolve(response.withoutCoHosts);
+  const mockFetchWithoutCH = Promise.resolve({
+    json: () => mockWithoutCoHost,
   });
-  return jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
+  return jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchWithoutCH);
 });
 
 afterAll(() => {

@@ -21,7 +21,7 @@ export default class Host extends React.Component {
   }
   componentDidMount() {
     if (this.state.id !== -1) {
-      fetch(`http://localhost:3005/host/id/${this.state.id}`, {
+      fetch(`http://192.168.99.100:3005/host/id/${this.state.id}`, {
         method: 'GET'
       })
         .then(res => res.json())
@@ -45,10 +45,7 @@ export default class Host extends React.Component {
     let state = JSON.parse(JSON.stringify(this.state));
     const length = Object.keys(state.coHosts).length;
 
-    let greeting = 'Meet your host';
-    if (length > 0) {
-      greeting = 'Meet your hosts';
-    }
+    let greeting = length > 0 ? 'Meet your hosts': 'Meet your host';
 
     return (
       <div id='host-profile'>
