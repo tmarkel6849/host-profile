@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-app.get('/host/id/:id', (req, res) => {
+app.get('/host/:id', (req, res) => {
   let data = {};
   db.from('hosts')
     .select()

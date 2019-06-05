@@ -6,7 +6,7 @@ module.exports = {
     connection: {
       host: 'rpropridbinstance.cjx6zdqr2ner.us-west-1.rds.amazonaws.com',
       user: 'rpropri',
-      password: 'p*nK+0Wn',
+      password: 'rpropribnb',
       database: 'airbnb_hosts'
     },
     pool: { min: 0, max: 7 },
@@ -22,7 +22,7 @@ module.exports = {
     connection: {
       host: 'rpropridbinstance.cjx6zdqr2ner.us-west-1.rds.amazonaws.com',
       user: 'rpropri',
-      password: 'p*nK+0Wn',
+      password: 'rpropribnb',
       database: 'airbnb_hosts'
     },
     pool: { min: 0, max: 7 }

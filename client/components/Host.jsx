@@ -21,7 +21,7 @@ export default class Host extends React.Component {
   }
   componentDidMount() {
     if (this.state.id !== -1) {
-      fetch(`http://192.168.99.100:3005/host/id/${this.state.id}`, {
+      fetch(`http://localhost:3005/host/${this.state.id}`, {
         method: 'GET'
       })
         .then(res => res.json())
