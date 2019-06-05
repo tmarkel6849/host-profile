@@ -10,7 +10,7 @@ const pool = new Pool ({
 
 
 const getAll = () => {
-  const queryString = 'SELECT * FROM hosts';
+  const queryString = `SELECT * FROM hosts`;
   pool.query(queryString, (err, result) => {
     if (err) {
       console.error(err.message);
@@ -19,6 +19,5 @@ const getAll = () => {
   })
 }
 
-getAll();
-
 module.exports.pool = pool;
+module.exports.getAll = getAll;
