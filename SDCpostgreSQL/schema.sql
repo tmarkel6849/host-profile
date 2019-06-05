@@ -16,5 +16,7 @@ CREATE TABLE hosts (
   hosturl VARCHAR NOT NULL
 );
 
-
--- INSERT INTO hosts (name, description, interaction, cohosts, datajoined, responserate, responsetime, hosturl) VALUES ('bobby', 'bobby is cool', 'usually in a bath robe', 'bobby works well with others', 'year 1990', 'real fast like', 'some time before', 'boby.url')
+CREATE TABLE languages (
+  id SERIAL NOT NULL,
+  language VARCHAR
+);
