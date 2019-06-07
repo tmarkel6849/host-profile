@@ -9,15 +9,15 @@ const pool = new Pool ({
 })
 
 
-const getAll = () => {
-  const queryString = `SELECT * FROM hosts`;
+const getOne = (cb) => {
+  const queryString = `SELECT * FROM hosts ORDER BY id DESC LIMIT 1`;
   pool.query(queryString, (err, result) => {
     if (err) {
       console.error(err.message);
     }
-    console.log(result);
+    cb(result.rows);
   })
 }
 
 module.exports.pool = pool;
-module.exports.getAll = getAll;
+module.exports.getOne = getOne;

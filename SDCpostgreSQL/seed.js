@@ -2,6 +2,8 @@ const { pool } = require('./index.js');
 const hostData = require('../db/hosts.js');
 const languages = require('../db/languages.js');
 
+/*************************Create random spoken languages for each host*************************/
+
 const langIdx = () => Math.floor(Math.random() * 8);
 
 const hostLanguages = () => {
@@ -22,6 +24,7 @@ const hostLanguages = () => {
   }
 }
 
+/********************Create Random hosts************************/
 
 const hostIdx = () => Math.floor(Math.random() * 100);
 
@@ -47,8 +50,8 @@ const randomEntry = () => {
     hostData[hostIdx()].name,
     hostData[hostIdx()].description,
     hostData[hostIdx()].interaction,
-    hostData[hostIdx()].dateJoined,
     JSON.stringify(randomCoHost()),
+    hostData[hostIdx()].dateJoined,
     hostData[hostIdx()].responseRate,
     hostData[hostIdx()].responseTime,
     hostData[hostIdx()].hostUrl,
@@ -57,6 +60,9 @@ const randomEntry = () => {
   ];
   return entry;
 }
+
+/****************************Transaction Insertion Process*********************************/
+//index for host table = id_index
 
 let count = 0;
 
@@ -94,10 +100,10 @@ const commit = () => {
     console.log('step 3 complete, profit!');
     console.log('this is the current count: ', count);
     console.log('this is the count + 1: ', ++count);
-    if (count < 10) {
+    if (count < 5) {
       begin(100000);
     }
   })
 }
-// this table has been seeded
+// this table has been seeded with 10m records
 // begin(100000);
