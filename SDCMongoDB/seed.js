@@ -1,0 +1,10 @@
+//   name: data.name,
+//   descriptions: data.description,
+//   interaction: data.interaction,
+//   cohosts: JSON.stringify(data.cohosts),
+//   datejoined: data.datejoined,
+//   responserate: data.responserate,
+//   responsetime: data.responsetime,
+//   hosturl: data.hosturl,
+//   language1: data.language1,
+//   language2: data.language2

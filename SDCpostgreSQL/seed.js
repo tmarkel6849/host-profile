@@ -28,29 +28,13 @@ const hostLanguages = () => {
 
 const hostIdx = () => Math.floor(Math.random() * 100);
 
-const randomCoHost = () => {
-  let coHostData = hostData[hostIdx()].coHosts;
-  let coHostKeys = Object.keys(coHostData);
-  if (coHostKeys.length === 1) {
-    return {
-      coHost1: coHostData[coHostKeys[0]]
-    };
-  } else if (coHostKeys.length === 2) {
-    return {
-      coHost1: coHostData[coHostKeys[0]],
-      coHost2: coHostData[coHostKeys[1]]
-    }
-  }
-  return {};
-}
-
 const randomEntry = () => {
   let hostLangs = hostLanguages();
   let entry = [
     hostData[hostIdx()].name,
     hostData[hostIdx()].description,
     hostData[hostIdx()].interaction,
-    JSON.stringify(randomCoHost()),
+    hostData[hostIdx()].coHosts,
     hostData[hostIdx()].dateJoined,
     hostData[hostIdx()].responseRate,
     hostData[hostIdx()].responseTime,
@@ -107,3 +91,6 @@ const commit = () => {
 }
 // this table has been seeded with 10m records
 // begin(100000);
+module.exports.hostIdx = hostIdx;
+module.exports.langIdx = langIdx;
+module.exports.randomEntry = randomEntry;
