@@ -25,3 +25,8 @@ dist/
 
 #env variables
 .env
+
+# csv files
+.csv
+
+.gitignore
