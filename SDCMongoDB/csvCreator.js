@@ -4,17 +4,6 @@ const hostData = require('../db/hosts.js');
 const { hostIdx } = require('../SDCpostgreSQL/seed.js');
 const { langIdx } = require('../SDCpostgreSQL/seed.js');
 
-//   name: data.name,
-//   descriptions: data.description,
-//   interaction: data.interaction,
-//   cohosts: JSON.stringify(data.cohosts),
-//   datejoined: data.datejoined,
-//   responserate: data.responserate,
-//   responsetime: data.responsetime,
-//   hosturl: data.hosturl,
-//   language1: data.language1,
-//   language2: data.language2
-
 /**********************CREATE RANDOM HOST ENTRIES***********************/
 
 const randomCsvEntry = () => {
