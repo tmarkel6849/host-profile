@@ -57,11 +57,6 @@ const csvWriter = createCsvWriter({
   ]
 });
 
-const records = [
-  { name: 'Billy', lang: 'spanglish man' },
-  { name: 'Joey', lang: 'funky chicken' }
-];
-
 const createCsv = (amount) => {
   createEntries(amount);
   csvWriter.writeRecords(entries)
