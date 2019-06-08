@@ -15,7 +15,7 @@ const { langIdx } = require('../SDCpostgreSQL/seed.js');
 //   language1: data.language1,
 //   language2: data.language2
 
-/**********************CREATE RANDOM HOST ENTRY***********************/
+/**********************CREATE RANDOM HOST ENTRIES***********************/
 
 const randomCsvEntry = () => {
   let entry = {
@@ -32,6 +32,13 @@ const randomCsvEntry = () => {
   return entry;
 }
 
+const createEntries = (amount) => {
+  for ( let i = 0; i < amount; i++ ) {
+    entries.push(randomCsvEntry());
+  }
+}
+
+const entries = [];
 
 /***********************WRITES TO CSV*******************************/
 
@@ -42,7 +49,7 @@ const csvWriter = createCsvWriter({
     { id: 'description', title: 'description' },
     { id: 'interaction', title: 'interaction' },
     { id: 'cohosts', title: 'cohosts' },
-    { id: 'datejoined', title: 'datajoined' },
+    { id: 'datejoined', title: 'datejoined' },
     { id: 'responserate', title: 'responserate' },
     { id: 'responsetime', title: 'responsetime' },
     { id: 'hosturl', title: 'hosturl' },
@@ -55,7 +62,12 @@ const records = [
   { name: 'Joey', lang: 'funky chicken' }
 ];
 
-csvWriter.writeRecords(records)
-  .then(() => {
-    console.log('...done')
-  });
+const createCsv = (amount) => {
+  createEntries(amount);
+  csvWriter.writeRecords(entries)
+    .then(() => {
+      console.log('done writing csv!');
+    });
+}
+
+createCsv(100000);
