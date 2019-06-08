@@ -28,5 +28,3 @@ dist/
 
 # csv files
 .csv
-
-.gitignore
