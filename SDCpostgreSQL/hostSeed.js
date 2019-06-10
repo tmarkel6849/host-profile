@@ -1,96 +1,100 @@
-const { pool } = require('./index.js');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const hostData = require('../db/hosts.js');
-const languages = require('../db/languages.js');
 
-/*************************Create random spoken languages for each host*************************/
-
-const langIdx = () => Math.floor(Math.random() * 8);
-
-const hostLanguages = () => {
-  let spokenLangs = Math.ceil(Math.random() * 2),
-      idx = langIdx(),
-      lang1 = idx;
-      lang2 = languages[idx+1] ? idx+1 : idx-1;
-  if (spokenLangs === 1) {
-    return {
-      lang1,
-      lang2: -1
-    }
-  } else if (spokenLangs === 2) {
-    return {
-      lang1,
-      lang2
-    }
-  }
-}
-
-/********************Create Random hosts************************/
+/******************** FUNCTIONS TO CREATE ENTRIES ************************/
 
 const hostIdx = () => Math.floor(Math.random() * 100);
 
-const randomEntry = () => {
-  let hostLangs = hostLanguages();
-  let entry = [
-    hostData[hostIdx()].name,
-    hostData[hostIdx()].description,
-    hostData[hostIdx()].interaction,
-    hostData[hostIdx()].coHosts,
-    hostData[hostIdx()].dateJoined,
-    hostData[hostIdx()].responseRate,
-    hostData[hostIdx()].responseTime,
-    hostData[hostIdx()].hostUrl,
-    hostLangs.lang1,
-    hostLangs.lang2
-  ];
-  return entry;
+const hostEntry = () => {
+  return {
+    name: hostData[hostIdx()].name,
+    description: hostData[hostIdx()].description,
+    interaction: hostData[hostIdx()].interaction,
+    datejoined: hostData[hostIdx()].dateJoined,
+    responserate: hostData[hostIdx()].responseRate,
+    responsetime: hostData[hostIdx()].responseTime,
+    hosturl: hostData[hostIdx()].hostUrl,
+  }
 }
 
-/****************************Transaction Insertion Process*********************************/
+/************************** WRITE ENTRIES TO CSV ****************************/
+
+const entries = []
+
+const csvWriter = createCsvWriter({
+  path: 'hosts1.csv',
+  header: [
+    { id: 'name', title: 'name' },
+    { id: 'description', title: 'description' },
+    { id: 'interaction', title: 'interaction' },
+    { id: 'datejoined', title: 'datejoined' },
+    { id: 'responserate', titel: 'resposnerate' },
+    { id: 'responsetime', title: 'responsetime' },
+    { id: 'hosturl', title: 'hosturl' }
+  ]
+})
+
+const createCsv = (amount) => {
+  for ( let i = 0; i < amount; i++ ) {
+    entries.push(hostEntry())
+  }
+  csvWriter.writeRecords(entries)
+    .then(() => {
+      console.log('host csv created...')
+    })
+}
+
+createCsv(10)
+
+
+
+
+/**************************** (Old process) Transaction Insertion Process*********************************/
 //index for host table = id_index
 
-let count = 0;
+// let count = 0;
 
-const begin = (num) => {
-  pool.query('BEGIN;', (err, result) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Step one complete, begin phase 2!')
-    insert(num);
-  })
-}
+// const begin = (num) => {
+//   pool.query('BEGIN;', (err, result) => {
+//     if (err) {
+//       return console.error(err.message);
+//     }
+//     console.log('Step one complete, begin phase 2!')
+//     insert(num);
+//   })
+// }
 
-const insert = (amount) => {
-  const queryString = `INSERT INTO hosts (name, description, interaction, cohosts, datajoined, responserate, responsetime, hosturl, language1, language2)
-  VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`
-  let params;
-  for (let i = 0; i < amount; i++) {
-    params = randomEntry();
-    pool.query(queryString, params, (err, result) => {
-      if (err) {
-        return console.error(err.message);
-      }
-    })
-  }
-  console.log('step 2 complete, READY THE LASER!')
-  commit();
-}
+// const insert = (amount) => {
+//   const queryString = `INSERT INTO hosts (name, description, interaction, cohosts, datajoined, responserate, responsetime, hosturl, language1, language2)
+//   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`
+//   let params;
+//   for (let i = 0; i < amount; i++) {
+//     params = randomEntry();
+//     pool.query(queryString, params, (err, result) => {
+//       if (err) {
+//         return console.error(err.message);
+//       }
+//     })
+//   }
+//   console.log('step 2 complete, READY THE LASER!')
+//   commit();
+// }
 
-const commit = () => {
-  pool.query('COMMIT;', (err, result) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('step 3 complete, profit!');
-    console.log('this is the current count: ', count);
-    console.log('this is the count + 1: ', ++count);
-    if (count < 5) {
-      begin(100000);
-    }
-  })
-}
-// this table has been seeded with 10m records
-// begin(100000);
-module.exports.hostIdx = hostIdx;
-module.exports.langIdx = langIdx;
-module.exports.randomEntry = randomEntry;
+// const commit = () => {
+//   pool.query('COMMIT;', (err, result) => {
+//     if (err) {
+//       return console.error(err.message);
+//     }
+//     console.log('step 3 complete, profit!');
+//     console.log('this is the current count: ', count);
+//     console.log('this is the count + 1: ', ++count);
+//     if (count < 5) {
+//       begin(100000);
+//     }
+//   })
+// }
+// // this table has been seeded with 10m records
+// // begin(100000);
+// module.exports.hostIdx = hostIdx;
+// module.exports.langIdx = langIdx;
+// module.exports.randomEntry = randomEntry;

@@ -49,4 +49,4 @@ const createCsv = (amount, host_id) => {
   })
 }
 
-createCsv(10, 1)
+// createCsv(10, 1)
