@@ -1,19 +1,18 @@
 require('dotenv').config()
 const { Pool } = require('pg')
 
-
 /******************* DATABASE CONNECTION ********************/
 
 const pool = new Pool ({
-  user: 'sdc',
-  host: 'localhost',
+  user: process.env.PSQL_USER,
+  host: process.env.PSQL_HOST,
   database: 'hostprofiles',
-  password: 'sdc',
+  password: process.env.PSQL_PASSWORD,
   port: 5432,
 })
 
 /******************* Queries **********************/
-// rename and replace for getting LAST one
+
 const getLastHostEntry = (cb) => {
   const queryString = `SELECT * FROM hosts ORDER BY id DESC LIMIT 1`;
   pool.query(queryString, (err, result) => {
@@ -36,6 +35,8 @@ const getRandomHost = (cb) => {
     return cb(result.rows)
   })
 }
+
+/******************* EXPORTS *******************/
 
 module.exports.pool = pool
 module.exports.getLastHostEntry = getLastHostEntry
