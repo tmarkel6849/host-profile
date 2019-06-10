@@ -10,7 +10,7 @@ CREATE TABLE hosts (
   name VARCHAR NOT NULL,
   description VARCHAR NOT NULL,
   interaction VARCHAR NOT NULL,
-  datajoined VARCHAR NOT NULL,
+  datejoined VARCHAR NOT NULL,
   responserate VARCHAR NOT NULL,
   responsetime VARCHAR NOT NULL,
   hosturl VARCHAR NOT NULL

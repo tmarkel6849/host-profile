@@ -13,4 +13,4 @@ seedLanguages = () => {
   }
 }
 // this table has been seeded
-// seedLanguages();
+seedLanguages();

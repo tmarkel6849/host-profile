@@ -30,7 +30,7 @@ const cohostEntry = (host_id) => {
 /*********************** WRITE ENTRIES TO CSV *************************/
 
 const csvWriter = createCsvWriter({
-  path: 'cohost1.csv',
+  path: '../csv/cohost1.csv',
   header: [
     { id: 'host_id', title: 'host_id' },
     { id: 'cohost_id', title: 'cohost_id' }
@@ -56,4 +56,4 @@ const createCsv = (amount) => {
   })
 }
 
-// createCsv(10)
+createCsv(10)

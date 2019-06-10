@@ -24,7 +24,7 @@ const hostLanguageEntry = (host_id) => {
 /************************* WRITE ENTRIES TO CSV *************************/
 
 const csvWriter = createCsvWriter({
-  path: 'hostsLang1.csv',
+  path: '../csv/hostsLang1.csv',
   header: [
     { id: 'host_id', title: 'host_id' },
     { id: 'language_id', title: 'language_id' }
