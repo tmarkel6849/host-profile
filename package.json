@@ -6,11 +6,12 @@
     "start": "node server/server.js",
     "react-dev": "webpack -d --watch",
     "seed": "npx knex migrate:rollback; npx knex migrate:latest; npx knex seed:run",
+    "psql-setup": "psql -d postgres -U sdc -f ./SDCpostgreSQL/schema.sql",
+    "psql-seed": "node ./SDCpostgreSQL/seed.js",
+    "mongo-seed": "node ./SDCMongoDB/seed.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage --colors",
-    "post-seed": "node ./SDCpostgreSQL/seed.js",
-    "mongo-seed": "node ./SDCMongoDB/seed.js"
+    "test:coverage": "jest --coverage --colors"
   },
   "repository": {
     "type": "git",

@@ -4,6 +4,7 @@ const languages = require('../db/languages.js');
 /*********************** Global Variables ***********************/
 
 const totalLanguages = Object.keys(languages).length
+const entries = []
 
 /*********************** FUNCTIONS TO CREATE RANDOM ENTRIES *************************/
 
@@ -21,8 +22,6 @@ const hostLanguageEntry = (host_id) => {
 }
 
 /************************* WRITE ENTRIES TO CSV *************************/
-
-const entries = []
 
 const csvWriter = createCsvWriter({
   path: 'hostsLang1.csv',

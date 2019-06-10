@@ -6,6 +6,7 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const maxCohosts = 2
 const lastCoHost = 0
 const hostTotal = 10
+const entries = []
 
 /*********************** FUNCTIONS TO CREATE ENTRIES *************************/
 
@@ -27,8 +28,6 @@ const cohostEntry = (host_id) => {
 }
 
 /*********************** WRITE ENTRIES TO CSV *************************/
-
-const entries = []
 
 const csvWriter = createCsvWriter({
   path: 'cohost1.csv',

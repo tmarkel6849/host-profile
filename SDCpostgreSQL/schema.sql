@@ -13,7 +13,7 @@ CREATE TABLE hosts (
   datajoined VARCHAR NOT NULL,
   responserate VARCHAR NOT NULL,
   responsetime VARCHAR NOT NULL,
-  hosturl VARCHAR NOT NULL,
+  hosturl VARCHAR NOT NULL
 );
 
 CREATE TABLE languages (
@@ -30,5 +30,5 @@ CREATE TABLE hostlanguages (
 CREATE TABLE cohost (
   id SERIAL NOT NULL,
   host_id SMALLINT NOT NULL,
-  cohost_id MALLINT NOT NULL
+  cohost_id SMALLINT NOT NULL
 );

@@ -4,6 +4,7 @@ const hostData = require('../db/hosts.js');
 /******************** GLOBAL VARIABLES ********************/
 
 const hostDataEntries = 100
+const entries = []
 
 /******************** FUNCTIONS TO CREATE ENTRIES ************************/
 
@@ -24,8 +25,6 @@ const hostEntry = () => {
 }
 
 /************************** WRITE ENTRIES TO CSV ****************************/
-
-const entries = []
 
 const csvWriter = createCsvWriter({
   path: 'hosts1.csv',
