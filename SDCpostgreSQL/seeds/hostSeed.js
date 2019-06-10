@@ -1,5 +1,5 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const hostData = require('../db/hosts.js');
+const hostData = require('../../db/hosts.js');
 
 /******************** GLOBAL VARIABLES ********************/
 
