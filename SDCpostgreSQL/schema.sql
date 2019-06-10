@@ -4,6 +4,7 @@ CREATE DATABASE hostprofiles;
 
 \c hostprofiles;
 
+-- remove the language fiels since there will be a join table instead
 CREATE TABLE hosts (
   id SERIAL NOT NULL,
   name VARCHAR NOT NULL,
@@ -14,11 +15,23 @@ CREATE TABLE hosts (
   responserate VARCHAR NOT NULL,
   responsetime VARCHAR NOT NULL,
   hosturl VARCHAR NOT NULL,
-  language1 SMALLINT NOT NULL,
-  language2 SMALLINT NOT NULL
+  -- language1 SMALLINT NOT NULL,
+  -- language2 SMALLINT NOT NULL
 );
 
 CREATE TABLE languages (
   id SERIAL NOT NULL,
   language VARCHAR
+);
+
+CREATE TABLE hostlanguages (
+  id SERIAL NOT NULL,
+  host_id SMALLINT NOT NULL,
+  language_id SMALLINT NOT NULL
+);
+
+CREATE TABLE cohost (
+  id SERIAL NOT NULL,
+  host_id SMALLINT NOT NULL,
+  cohost_id MALLINT NOT NULL
 );
