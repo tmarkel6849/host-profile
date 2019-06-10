@@ -1,11 +1,15 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const hostData = require('../db/hosts.js');
 
+/******************** GLOBAL VARIABLES ********************/
+
+const hostDataEntries = 100
+
 /******************** FUNCTIONS TO CREATE ENTRIES ************************/
 
 const hostTotal = 0;
 
-const hostIdx = () => Math.floor(Math.random() * 100);
+const hostIdx = () => Math.floor(Math.random() * hostDataEntries);
 
 const hostEntry = () => {
   return {

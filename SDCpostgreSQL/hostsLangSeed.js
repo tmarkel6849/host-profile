@@ -1,8 +1,11 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const languages = require('../db/languages.js');
+
+/*********************** Global Variables ***********************/
+
+const totalLanguages = Object.keys(languages).length
 
 /*********************** FUNCTIONS TO CREATE RANDOM ENTRIES *************************/
-
-const totalLanguages = 8;
 
 const languageIdx = () => {
   return Math.ceil(Math.random() * totalLanguages)

@@ -5,16 +5,16 @@ const cors = require('cors')
 const path = require('path')
 const { getLastHostEntry } = require('../SDCpostgreSQL/index.js')
 const { getRandomHost } = require('../SDCpostgreSQL/index.js')
-const PORT = process.env.PORT || 3005;
 
+const PORT = process.env.PORT || 3005;
 const app = express()
 
 app.use(cors())
-app.use(express.static(pat.join(__dirname + '/../public')))
+app.use(express.static(path.join(__dirname + '/../public')))
 app.use(bodyParser.json());app.use(bodyParser.urlencoded())
 
 
-/*********************ROUTES ACCESSING POSTGRES ************************/
+/********************* ROUTES ACCESSING POSTGRES ************************/
 
 app.get('/postgres/lastEntry', (req, res) => {
   getLastHostEntry((data) => {
@@ -36,8 +36,12 @@ app.get('/postgres/randomEntry', (req, res) => {
   })
 })
 
-/********************ROUTE ACCESSING MONGODB ****************************/
+/******************** ROUTE ACCESSING MONGODB ***********************/
 
+
+
+/******************** LISTIN! **********************/
 
 app.listen(port, () => {
-  console.log(`listening on port ${PORT}`);});
+  console.log(`listening on port ${PORT}`)
+})

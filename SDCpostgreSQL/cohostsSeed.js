@@ -1,18 +1,24 @@
-require('dotenv').config()
-const createCsvWriter = require('csv-writer').createObjectCsvWriter
+require('dotenv').config();
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
-/*********************** FUNCTIONS TO CREATE ENTRIES *************************/
+/*********************** GLOBAL VARIABLES ************************/
 
 const maxCohosts = 2
+const lastCoHost = 0
+const hostTotal = 10
+
+/*********************** FUNCTIONS TO CREATE ENTRIES *************************/
 
 const numberOfCohosts = () => {
   return Math.ceil(Math.random() * maxCohosts)
 }
 
-console.log(numberOfCohosts())
-
 const coHostIdx = (host_id) => {
-  return Math.ceil(Math.random() * host_id-1)
+  let randomIdx = Math.ceil(Math.random() * hostTotal)
+  while( true ) {
+    if ( randomIdx !== host_id ) return randomIdx
+    randomIdx = Math.ceil(Math.random() * hostTotal)
+  }
 }
 
 const cohostEntry = (host_id) => {
@@ -33,17 +39,17 @@ const csvWriter = createCsvWriter({
 })
 
 const createCsv = (amount) => {
-  let host_id = process.env.HOST_TOTAL,
-      coHostNumber;
+  let currentHost = lastCoHost,
+      numOfCohosts
   for ( let i = 0; i < amount; i++ ) {
-    coHostNumber = numberOfCohosts();
-    if ( coHostNumber === 1 ) {
-      entries.push(cohostEntry(host_id));
-    } else if ( coHostNumber === 2 ) {
-      entries.push(cohostEntry(host_id));
-      entries.push(cohostEntry(host_id));
+    numOfCohosts = numberOfCohosts()
+    if ( numOfCohosts === 1 ) {
+      entries.push(cohostEntry(currentHost))
+    } else if ( numOfCohosts === 2 ) {
+      entries.push(cohostEntry(currentHost))
+      entries.push(cohostEntry(currentHost))
     }
-    host_id++
+    currentHost++
   }
   csvWriter.writeRecords(entries)
     .then(() => {
@@ -51,4 +57,4 @@ const createCsv = (amount) => {
   })
 }
 
-// createCsv(10, 1)
+// createCsv(10)
