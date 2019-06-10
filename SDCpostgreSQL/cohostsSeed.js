@@ -1,4 +1,5 @@
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+require('dotenv').config()
+const createCsvWriter = require('csv-writer').createObjectCsvWriter
 
 /*********************** FUNCTIONS TO CREATE ENTRIES *************************/
 
@@ -31,8 +32,9 @@ const csvWriter = createCsvWriter({
   ]
 })
 
-const createCsv = (amount, host_id) => {
-  let coHostNumber;
+const createCsv = (amount) => {
+  let host_id = process.env.HOST_TOTAL,
+      coHostNumber;
   for ( let i = 0; i < amount; i++ ) {
     coHostNumber = numberOfCohosts();
     if ( coHostNumber === 1 ) {

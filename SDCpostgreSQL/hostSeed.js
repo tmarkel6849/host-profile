@@ -3,6 +3,8 @@ const hostData = require('../db/hosts.js');
 
 /******************** FUNCTIONS TO CREATE ENTRIES ************************/
 
+const hostTotal = 0;
+
 const hostIdx = () => Math.floor(Math.random() * 100);
 
 const hostEntry = () => {
@@ -46,7 +48,7 @@ const createCsv = (amount) => {
 
 createCsv(10)
 
-
+module.exports.hostTotal = hostTotal
 
 
 /**************************** (Old process) Transaction Insertion Process*********************************/
