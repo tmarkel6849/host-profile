@@ -17,7 +17,7 @@ const hostSpokenLanguages = () => {
 }
 
 const hostLanguageEntry = (host_id) => {
-  let language_id = languageIdx();
+  let language_id = languageIdx()
   return { host_id, language_id }
 }
 

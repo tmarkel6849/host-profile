@@ -6,7 +6,7 @@ const path = require('path')
 const { getLastHostEntry } = require('../SDCpostgreSQL/index.js')
 const { getRandomHost } = require('../SDCpostgreSQL/index.js')
 
-const PORT = process.env.PORT || 3005;
+const port = process.env.PORT || 3005;
 const app = express()
 
 app.use(cors())
@@ -43,5 +43,5 @@ app.get('/postgres/randomEntry', (req, res) => {
 /******************** LISTIN! **********************/
 
 app.listen(port, () => {
-  console.log(`listening on port ${PORT}`)
+  console.log(`listening on port ${port}`)
 })
