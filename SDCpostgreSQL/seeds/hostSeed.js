@@ -62,7 +62,7 @@ const seedHosts = () => {
   })
 }
 
-createCsvAndSeed(10)
+// createCsvAndSeed(15)
 
 /***************** EXPORTS ********************/
 

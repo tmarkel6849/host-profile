@@ -71,4 +71,4 @@ const seedHostLangs = () => {
   })
 }
 
-createCsvAndSeed(10);
+// createCsvAndSeed(10);

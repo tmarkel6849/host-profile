@@ -1,5 +1,6 @@
 require('dotenv').config()
 const { Pool } = require('pg')
+const { hostTotal } = require('./seeds/hostSeed.js')
 
 /******************* DATABASE CONNECTION ********************/
 
@@ -12,39 +13,52 @@ const pool = new Pool ({
 })
 
 /******************* Queries **********************/
+//gethost, getlangs psql functions
 
 const getLastHostEntry = (cb) => {
-  const queryString = `SELECT * FROM hosts ORDER BY id DESC LIMIT 1`;
-  pool.query(queryString, (err, result) => {
+  const hostsQueryString = `SELECT * FROM gethost($1)`,
+        langQueryString = `SELECT * FROM getlangs($1)`
+  let hostId = [hostTotal],
+      data
+    console.log('our querying journey begins....')
+    console.log('and this is the id going in: ', hostId)
+  pool.query(hostsQueryString, hostId, (err, result1) => {
     if ( err ) {
-      console.error(err.message)
-      return cb()
+      return console.error(err.message)
     }
-    return cb(result.rows)
+    pool.query(langQueryString, hostId, (err, result2) => {
+      if ( err ) {
+        return console.error(err.message)
+      }
+      data = [result1.rows, result2.rows]
+      console.log('results are in.... ', data)
+      cb(data)
+    })
   })
 }
 
 const getRandomHost = (cb) => {
-  const randomHostId = [ Math.ceil(Math.random() * process.env.HOST_TOTAL) ],
-        queryString = 'SELECT * FROM hosts WHERE id=$1'
-  pool.query(queryString, randomHostId, (err, result) => {
+  const randomHostId = [ Math.ceil(Math.random() * hostTotal) ],
+        hostsQueryString = `SELECT * FROM gethost($1);`,
+        langQueryString = `SELECT * FROM getlangs($1);`
+  let data;
+  console.log('starting our query journey...')
+  pool.query(hostsQueryString, randomHostId, (err, result1) => {
     if ( err ) {
       console.error(err.message)
-      return cb()
     }
-    return cb(result.rows)
+    pool.query(langQueryString, randomHostId, (err, result2) => {
+      if ( err ) {
+        return console.error(err.message)
+      }
+      data = [result1.rows, result2.rows]
+      console.log('results are in.... ', data)
+      return cb(data)
+    })
   })
 }
 
-// +++++++++++++++++SELECT LANGUAGES +++++++++++++++++++
-// SELECT languages.language FROM languages
-// INNER JOIN hostlangs ON hostlangs.host_id = 5
-// WHERE languages.id = hostlangs.lang_id;
-
-// +++++++++++++++++SELECT COHOSTS++++++++++++++++++++
-// SELECT DISTINCT hosts.name FROM hosts
-// INNER JOIN cohosts ON cohosts.host_id = 5
-// WHERE hosts.id = 5 OR hosts.id = cohosts.cohost_id;
+getLastHostEntry(()=>{});
 
 
 /******************* EXPORTS *******************/

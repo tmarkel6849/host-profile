@@ -77,4 +77,4 @@ const seedCohosts = () => {
   })
 }
 
-createCsvAndSeed(10)
+// createCsvAndSeed(10)
