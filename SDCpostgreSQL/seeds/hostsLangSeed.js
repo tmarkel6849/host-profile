@@ -4,6 +4,8 @@ const languages = require('../../db/languages.js');
 /*********************** Global Variables ***********************/
 
 const totalLanguages = Object.keys(languages).length
+const lastLanguagedHost = 0
+const hostTotal = 10
 const entries = []
 
 /*********************** FUNCTIONS TO CREATE RANDOM ENTRIES *************************/
@@ -31,8 +33,9 @@ const csvWriter = createCsvWriter({
   ]
 })
 
-const createCsv = (amount, hostId) => {
-  let spokenLanguages;
+const createCsv = (amount) => {
+  let hostId = lastLanguagedHost,
+      spokenLanguages;
   for ( let i = 0; i < amount; i++ ) {
     spokenLanguages = hostSpokenLanguages()
     if ( spokenLanguages === 1 ) {
@@ -49,4 +52,4 @@ const createCsv = (amount, hostId) => {
     })
 }
 
-// createCsv(10, 1);
+createCsv(10);

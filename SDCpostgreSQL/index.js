@@ -36,6 +36,10 @@ const getRandomHost = (cb) => {
   })
 }
 
+const testQuery = () => {
+
+}
+
 /******************* EXPORTS *******************/
 
 module.exports.pool = pool
