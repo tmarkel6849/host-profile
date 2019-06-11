@@ -1,14 +1,10 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const hostData = require('../../db/hosts.js');
 const { pool } = require('../index.js')
-const { lastSeededHost } = require('./seeder.js')
 
 /******************** GLOBAL VARIABLES ********************/
 
-const hostDataEntries = Object.keys(hostData).length,
-      hostTotal = 10,
-      lastCohost = 0,
-      lastLanghost = 0
+const hostDataEntries = Object.keys(hostData).length
 
 /******************** FUNCTIONS TO CREATE ENTRIES ************************/
 

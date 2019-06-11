@@ -41,6 +41,8 @@ const csvWriter = createCsvWriter({
   ]
 })
 
+const createCsvAndSeed = (transaction) => {
+  let currentHost = lastSeededHost,
       entries = [],
       firstCohost,
       numOfCohosts
@@ -74,5 +76,4 @@ const seedCohosts = () => {
   })
 }
 
-// createCsvAndSeed(10)
 module.exports.cohostsSeed = createCsvAndSeed
