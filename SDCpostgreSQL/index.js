@@ -36,6 +36,17 @@ const getRandomHost = (cb) => {
   })
 }
 
+// +++++++++++++++++SELECT LANGUAGES +++++++++++++++++++
+// SELECT languages.language FROM languages
+// INNER JOIN hostlangs ON hostlangs.host_id = 5
+// WHERE languages.id = hostlangs.lang_id;
+
+// +++++++++++++++++SELECT COHOSTS++++++++++++++++++++
+// SELECT DISTINCT hosts.name FROM hosts
+// INNER JOIN cohosts ON cohosts.host_id = 5
+// WHERE hosts.id = 5 OR hosts.id = cohosts.cohost_id;
+
+
 /******************* EXPORTS *******************/
 
 module.exports.pool = pool
