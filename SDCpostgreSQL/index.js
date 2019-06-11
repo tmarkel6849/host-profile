@@ -20,8 +20,7 @@ const getLastHostEntry = (cb) => {
         langQueryString = `SELECT * FROM getlangs($1)`
   let hostId = [hostTotal],
       data
-    console.log('our querying journey begins....')
-    console.log('and this is the id going in: ', hostId)
+
   pool.query(hostsQueryString, hostId, (err, result1) => {
     if ( err ) {
       return console.error(err.message)
@@ -42,7 +41,7 @@ const getRandomHost = (cb) => {
         hostsQueryString = `SELECT * FROM gethost($1);`,
         langQueryString = `SELECT * FROM getlangs($1);`
   let data;
-  console.log('starting our query journey...')
+
   pool.query(hostsQueryString, randomHostId, (err, result1) => {
     if ( err ) {
       console.error(err.message)
@@ -52,14 +51,10 @@ const getRandomHost = (cb) => {
         return console.error(err.message)
       }
       data = [result1.rows, result2.rows]
-      console.log('results are in.... ', data)
       return cb(data)
     })
   })
 }
-
-getLastHostEntry(()=>{});
-
 
 /******************* EXPORTS *******************/
 

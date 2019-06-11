@@ -1,6 +1,7 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const hostData = require('../../db/hosts.js');
 const { pool } = require('../index.js')
+const { lastSeededHost } = require('./seeder.js')
 
 /******************** GLOBAL VARIABLES ********************/
 
@@ -62,10 +63,6 @@ const seedHosts = () => {
   })
 }
 
-// createCsvAndSeed(15)
-
 /***************** EXPORTS ********************/
 
-module.exports.hostTotal = hostTotal
-module.exports.lastCohost = lastCohost
-module.exports.lastLanghost = lastLanghost
+module.exports.hostSeed = createCsvAndSeed

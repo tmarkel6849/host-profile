@@ -1,6 +1,5 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const { hostTotal } = require('./hostSeed.js')
-const { lastCohost } = require('./hostSeed.js')
+const { lastSeededHost } = require('./seeder.js')
 const { pool } = require('../index.js')
 
 /*********************** GLOBAL VARIABLES ************************/
@@ -14,12 +13,12 @@ const numberOfCohosts = () => {
 }
 
 const coHostIdx = (host_id, firstCohost) => {
-  let randomIdx = Math.ceil(Math.random() * hostTotal)
+  let randomIdx = Math.ceil(Math.random() * lastSeededHost)
   while( true ) {
     if ( randomIdx === host_id ) {
-      randomIdx = Math.ceil(Math.random() * hostTotal)
+      randomIdx = Math.ceil(Math.random() * lastSeededHost)
     } else if ( randomIdx === firstCohost ) {
-      randomIdx = Math.ceil(Math.random() * hostTotal)
+      randomIdx = Math.ceil(Math.random() * lastSeededHost)
     } else {
       break
     }
@@ -42,8 +41,6 @@ const csvWriter = createCsvWriter({
   ]
 })
 
-const createCsvAndSeed = (transaction) => {
-  let currentHost = lastCohost,
       entries = [],
       firstCohost,
       numOfCohosts
@@ -78,3 +75,4 @@ const seedCohosts = () => {
 }
 
 // createCsvAndSeed(10)
+module.exports.cohostsSeed = createCsvAndSeed
