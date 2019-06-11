@@ -3,12 +3,12 @@ const hostData = require('../../db/hosts.js');
 
 /******************** GLOBAL VARIABLES ********************/
 
-const hostDataEntries = 100
-const entries = []
+const hostDataEntries = Object.keys(hostData).length,
+      hostTotal = 10,
+      lastCohost = 0,
+      lastLanghost = 0,
 
 /******************** FUNCTIONS TO CREATE ENTRIES ************************/
-
-const hostTotal = 0;
 
 const hostIdx = () => Math.floor(Math.random() * hostDataEntries);
 
@@ -40,6 +40,7 @@ const csvWriter = createCsvWriter({
 })
 
 const createCsv = (amount) => {
+  const entries = []
   for ( let i = 0; i < amount; i++ ) {
     entries.push(hostEntry())
   }
@@ -51,4 +52,8 @@ const createCsv = (amount) => {
 
 createCsv(10)
 
+/***************** EXPORTS ********************/
+
 module.exports.hostTotal = hostTotal
+module.exports.lastCohost = lastCohost
+module.exports.lastLanghost = lastLanghost

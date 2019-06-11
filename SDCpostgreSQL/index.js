@@ -16,7 +16,7 @@ const pool = new Pool ({
 const getLastHostEntry = (cb) => {
   const queryString = `SELECT * FROM hosts ORDER BY id DESC LIMIT 1`;
   pool.query(queryString, (err, result) => {
-    if (err) {
+    if ( err ) {
       console.error(err.message)
       return cb()
     }
@@ -25,19 +25,15 @@ const getLastHostEntry = (cb) => {
 }
 
 const getRandomHost = (cb) => {
-  const randomHostId = [ Math.ceil(Math.random() * hostTotal) ]
-  const queryString = 'SELECT * FROM hosts WHERE id=$1'
-  poolquery(queryString, randomHostId, (err, result) => {
-    if (err) {
+  const randomHostId = [ Math.ceil(Math.random() * process.env.HOST_TOTAL) ],
+        queryString = 'SELECT * FROM hosts WHERE id=$1'
+  pool.query(queryString, randomHostId, (err, result) => {
+    if ( err ) {
       console.error(err.message)
       return cb()
     }
     return cb(result.rows)
   })
-}
-
-const testQuery = () => {
-
 }
 
 /******************* EXPORTS *******************/

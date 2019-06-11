@@ -1,12 +1,10 @@
-require('dotenv').config();
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const { hostTotal } = require('./hostSeed.js')
+const { lastCohost } = require('./hostSeed.js')
 
 /*********************** GLOBAL VARIABLES ************************/
 
 const maxCohosts = 2
-const lastCoHost = 0
-const hostTotal = 10
-const entries = []
 
 /*********************** FUNCTIONS TO CREATE ENTRIES *************************/
 
@@ -38,7 +36,8 @@ const csvWriter = createCsvWriter({
 })
 
 const createCsv = (amount) => {
-  let currentHost = lastCoHost,
+  let currentHost = lastCohost,
+      entries = [],
       numOfCohosts
   for ( let i = 0; i < amount; i++ ) {
     numOfCohosts = numberOfCohosts()
