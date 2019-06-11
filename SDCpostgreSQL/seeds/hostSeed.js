@@ -1,12 +1,13 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const hostData = require('../../db/hosts.js');
+const { pool } = require('../index.js')
 
 /******************** GLOBAL VARIABLES ********************/
 
 const hostDataEntries = Object.keys(hostData).length,
       hostTotal = 10,
       lastCohost = 0,
-      lastLanghost = 0,
+      lastLanghost = 0
 
 /******************** FUNCTIONS TO CREATE ENTRIES ************************/
 
@@ -24,10 +25,10 @@ const hostEntry = () => {
   }
 }
 
-/************************** WRITE ENTRIES TO CSV ****************************/
+/******************* CREATE CSV / IMPORT TO DATABASE *********************/
 
 const csvWriter = createCsvWriter({
-  path: '../csv/hosts1.csv',
+  path: '../csv/hosts.csv',
   header: [
     { id: 'name', title: 'name' },
     { id: 'description', title: 'description' },
@@ -39,7 +40,7 @@ const csvWriter = createCsvWriter({
   ]
 })
 
-const createCsv = (amount) => {
+const createCsvAndSeed = (amount) => {
   const entries = []
   for ( let i = 0; i < amount; i++ ) {
     entries.push(hostEntry())
@@ -47,10 +48,21 @@ const createCsv = (amount) => {
   csvWriter.writeRecords(entries)
     .then(() => {
       console.log('host csv created...')
+      seedHosts()
     })
 }
 
-createCsv(10)
+const seedHosts = () => {
+  const queryString = "COPY hosts(name, description, interaction, datejoined, responserate, responsetime, hosturl) FROM '/Users/trevormarkel/Documents/Galvanize/SDC1/host-profile/SDCpostgreSQL/csv/hosts.csv' DELIMITER ',' CSV HEADER"
+  pool.query(queryString, (err, result) => {
+    if (err) {
+      return console.error(err.message)
+    }
+    console.log('hosts table seeded...')
+  })
+}
+
+createCsvAndSeed(10)
 
 /***************** EXPORTS ********************/
 

@@ -9,8 +9,8 @@ seedLanguages = () => {
         return console.error(err.message);
       }
     })
-    console.log('languages seeded');
+    console.log('languages table seeded...');
   }
 }
-// this table has been seeded
-seedLanguages();
+
+// seedLanguages();

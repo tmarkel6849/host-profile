@@ -21,13 +21,13 @@ CREATE TABLE languages (
   language VARCHAR
 );
 
-CREATE TABLE hostlanguages (
+CREATE TABLE hostlangs (
   id SERIAL NOT NULL,
   host_id SMALLINT NOT NULL,
-  language_id SMALLINT NOT NULL
+  lang_id SMALLINT NOT NULL
 );
 
-CREATE TABLE cohost (
+CREATE TABLE cohosts (
   id SERIAL NOT NULL,
   host_id SMALLINT NOT NULL,
   cohost_id SMALLINT NOT NULL
