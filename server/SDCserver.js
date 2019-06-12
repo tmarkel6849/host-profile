@@ -22,14 +22,11 @@ app.get('/postgres/lastentry', (req, res) => {
       console.log('error retrieving last entry')
       return res.send(400)
     }
-    // last array will contain
-    for ( let obj in data )
-
-    return res.send(200)
+    return res.send(data)
   })
 })
 
-app.get('/postgres/randomEntry', (req, res) => {
+app.get('/postgres/randomentry', (req, res) => {
   getRandomHost((data) => {
     if (!data) {
       console.log('error retrieving random entry')
