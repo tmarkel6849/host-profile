@@ -1,29 +1,43 @@
-require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const path = require('path');
-const { getOne } = require('../SDCpostgreSQL/index.js');
-port = 3005;
+require('dotenv').config()
+const express = require('express'),
+      bodyParser = require('body-parser'),
+      cors = require('cors'),
+      path = require('path'),
+      { getLastHostEntry } = require('../SDCpostgreSQL/index.js'),
+      { getRandomHost } = require('../SDCpostgreSQL/index.js')
 
-const app = express();
+const port = process.env.PORT || 3005,
+      app = express()
 
-app.use(cors());
-app.use(express.static(path.join(__dirname + '/../public')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(cors())
+app.use(express.static(path.join(__dirname + '/../public')))
+app.use(bodyParser.json());app.use(bodyParser.urlencoded())
 
 
-app.get('/postgres', (req, res) => {
-  getOne((data) => {
+/********************* ROUTES ACCESSING POSTGRES ************************/
+
+app.get('/postgres/lastEntry', (req, res) => {
+  getLastHostEntry((data) => {
     if (!data) {
-      res.send(404);
-      return;
+      console.log('error retrieving last entry')
+      return res.send(400)
     }
-    res.send(data[0]);
+    return res.send(data)
   })
 })
 
+app.get('/postgres/randomEntry', (req, res) => {
+  getRandomHost((data) => {
+    if (!data) {
+      console.log('error retrieving random entry')
+      return res.send(400)
+    }
+    return res.send(data)
+  })
+})
+
+/******************** HEY! LISTIN!! **********************/
+
 app.listen(port, () => {
-  console.log(`listening on port ${port}`);
-});
+  console.log(`listening on port ${port}`)
+})

@@ -1,23 +1,64 @@
-const { Pool } = require('pg');
+require('dotenv').config()
+const { Pool } = require('pg'),
+      { hostTotal } = require('./seeds/hostSeed.js')
+
+/******************* DATABASE CONNECTION ********************/
 
 const pool = new Pool ({
-  user: 'sdc',
-  host: 'localhost',
+  user: process.env.PSQL_USER,
+  host: process.env.PSQL_HOST,
   database: 'hostprofiles',
-  password: 'sdc',
+  password: process.env.PSQL_PASSWORD,
   port: 5432,
 })
 
+/******************* Queries **********************/
 
-const getOne = (cb) => {
-  const queryString = `SELECT * FROM hosts ORDER BY id DESC LIMIT 1`;
-  pool.query(queryString, (err, result) => {
-    if (err) {
-      console.error(err.message);
+const getLastHostEntry = (cb) => {
+  const hostsQueryString = `SELECT * FROM gethost($1)`,
+        langQueryString = `SELECT * FROM getlangs($1)`
+  let hostId = [hostTotal],
+      data
+
+  pool.query(hostsQueryString, hostId, (err, result1) => {
+    if ( err ) {
+      return console.error(err.message)
     }
-    cb(result.rows);
+    pool.query(langQueryString, hostId, (err, result2) => {
+      if ( err ) {
+        return console.error(err.message)
+      }
+      data = [result1.rows, result2.rows]
+      console.log('results are in.... ', data)
+      cb(data)
+    })
   })
 }
 
-module.exports.pool = pool;
-module.exports.getOne = getOne;
+const getRandomHost = (cb) => {
+  const randomHostId = [ Math.ceil(Math.random() * hostTotal) ],
+        hostsQueryString = `SELECT * FROM gethost($1);`,
+        langQueryString = `SELECT * FROM getlangs($1);`
+  let data;
+
+  pool.query(hostsQueryString, randomHostId, (err, result1) => {
+    if ( err ) {
+      console.error(err.message)
+    }
+    pool.query(langQueryString, randomHostId, (err, result2) => {
+      if ( err ) {
+        return console.error(err.message)
+      }
+      data = [result1.rows, result2.rows]
+      return cb(data)
+    })
+  })
+}
+
+/******************* EXPORTS *******************/
+
+module.exports = {
+  pool,
+  getLastHostEntry,
+  getRandomHost
+}

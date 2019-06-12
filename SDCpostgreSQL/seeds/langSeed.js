@@ -1,5 +1,5 @@
-const { pool } = require('./index.js');
-const languages = require('../db/languages.js');
+const { pool } = require('../index.js');
+const languages = require('../../db/languages.js');
 
 seedLanguages = () => {
   let queryString = 'INSERT INTO languages (language) VALUES ($1)';
@@ -9,8 +9,6 @@ seedLanguages = () => {
         return console.error(err.message);
       }
     })
-    console.log('languages seeded');
+    console.log('languages table seeded...');
   }
 }
-// this table has been seeded
-// seedLanguages();
