@@ -3,22 +3,27 @@
 const { hostSeed } = require('./hostSeed.js')
 const { cohostsSeed } = require('./cohostsSeed.js')
 const { langSeed } = require('./langSeed.js')
-const { hostlangsSeed } = require('./hostsLangSeed')
+const { hostslangSeed } = require('./hostsLangSeed.js')
 
 /******************** GLOBAL VARIABLES **********************/
 
-const lastSeededHost = 0
+let lastSeededHost = 10,
+    lastSeededJoin = 0
 
 /******************** FULL SPECTRUM SEEDING FUNCTION +++++++++++++++*/
 
 const masterSeeder = (transaction, transactions) => {
-  langSeed()
+  // langSeed()
   for ( let i = 0; i < transactions; i++ ) {
     hostSeed(transaction)
+    lastSeededHost += transaction
     cohostsSeed(transaction)
-    hostlangsSeed(transaction)
+    hostslangSeed(transaction)
+    lastSeededJoin += transaction
   }
-
 }
 
+// masterSeeder(10, 10);
+
 module.exports.lastSeededHost = lastSeededHost
+module.exports.lastSeededJoin = lastSeededJoin

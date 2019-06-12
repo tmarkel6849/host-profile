@@ -1,6 +1,8 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const { lastSeededHost } = require('./seeder.js')
 const { pool } = require('../index.js')
+let { lastSeededHost } = require('./seeder.js')
+let { lastSeededJoin } = require('./seeder.js')
+
 
 /*********************** GLOBAL VARIABLES ************************/
 
@@ -42,23 +44,24 @@ const csvWriter = createCsvWriter({
 })
 
 const createCsvAndSeed = (transaction) => {
-  let currentHost = lastSeededHost,
-      entries = [],
+  let entries = [],
       firstCohost,
       numOfCohosts
-  for ( let j = 0; j < transaction; j++ ) {
+      console.log('entering csv loop')
+  for ( let i = 0; i < transaction; i++ ) {
     numOfCohosts = numberOfCohosts()
     if ( numOfCohosts === 0 ) {
-      entries.push({ host_id: currentHost, cohost_id: 0 })
+      entries.push({ host_id: lastSeededJoin, cohost_id: 0 })
     } else if ( numOfCohosts === 1 ) {
-      entries.push(cohostEntry(currentHost))
+      entries.push(cohostEntry(lastSeededJoin))
     } else if ( numOfCohosts === 2 ) {
-      firstCohost = cohostEntry(currentHost)
+      firstCohost = cohostEntry(lastSeededJoin)
       entries.push(firstCohost)
-      entries.push(cohostEntry(currentHost, firstCohost.cohost_id))
+      entries.push(cohostEntry(lastSeededJoin, firstCohost.cohost_id))
     }
-    currentHost++
+    lastSeededJoin++
   }
+  console.log('going to write csv....')
   csvWriter.writeRecords(entries)
   .then(() => {
     console.log('cohosts csv written...')

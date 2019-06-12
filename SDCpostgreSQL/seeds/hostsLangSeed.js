@@ -1,7 +1,7 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const languages = require('../../db/languages.js');
-const { lastSeededHost } = require('./seeder.js')
 const { pool } = require('../index.js')
+let { lastSeededJoin } = require('./seeder.js')
 
 /*********************** Global Variables ***********************/
 
@@ -39,20 +39,19 @@ const csvWriter = createCsvWriter({
 })
 
 const createCsvAndSeed = (transaction) => {
-  let hostId = lastSeededHost,
-      entries = [],
+  let entries = [],
       firstLanguage,
       spokenLanguages
   for ( let i = 0; i < transaction; i++ ) {
     spokenLanguages = hostSpokenLanguages()
     if ( spokenLanguages === 1 ) {
-      entries.push(hostLanguageEntry(hostId))
+      entries.push(hostLanguageEntry(lastSeededJoin))
     } else if ( spokenLanguages === 2 ) {
-      firstLanguage = hostLanguageEntry(hostId)
+      firstLanguage = hostLanguageEntry(lastSeededJoin)
       entries.push(firstLanguage)
-      entries.push(hostLanguageEntry(hostId, firstLanguage.lang_id))
+      entries.push(hostLanguageEntry(lastSeededJoin, firstLanguage.lang_id))
     }
-    hostId++
+    lastSeededJoin++
   }
   csvWriter.writeRecords(entries)
   .then(() => {
@@ -71,5 +70,6 @@ const seedHostLangs = () => {
   })
 }
 
-// createCsvAndSeed(10);
+createCsvAndSeed(10)
+
 module.exports.hostslangSeed = createCsvAndSeed

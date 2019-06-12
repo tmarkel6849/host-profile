@@ -44,7 +44,7 @@ const createCsvAndSeed = (amount) => {
   }
   csvWriter.writeRecords(entries)
     .then(() => {
-      console.log('host csv created...')
+      console.log('hosts csv created...')
       seedHosts()
     })
 }
@@ -58,6 +58,8 @@ const seedHosts = () => {
     console.log('hosts table seeded...')
   })
 }
+
+// createCsvAndSeed(10)
 
 /***************** EXPORTS ********************/
 
