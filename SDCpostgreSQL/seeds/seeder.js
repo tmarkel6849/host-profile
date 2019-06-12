@@ -5,7 +5,7 @@ let lastSeededHost = 0,
     totalHosts = 10000000,
     transactionCount = 1,
     transactions = 100,
-    transaction = 100000
+    transaction = 100001
 
 /******************** SEND THEM OUT TO THE WORLD +++++++++++++++*/
 
