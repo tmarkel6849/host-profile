@@ -76,7 +76,27 @@ const getRandomHost = (cb) => {
       }
       data = [ result1.rows, result2.rows ]
       formattedData = formatData(data, randomHostId)
-      return cb(formattedData)
+      cb(formattedData)
+    })
+  })
+}
+
+const getHost = (host, cb) => {
+  const hostsQueryString = `SELECT DISTINCT hosts.id, hosts.name, hosts.description, hosts.interaction, hosts.datejoined, hosts.responserate, hosts.responsetime, hosts.hosturl FROM hosts INNER JOIN cohosts ON cohosts.host_id=$1 WHERE hosts.id=$1 OR hosts.id=cohosts.cohost_id;`,
+    langQueryString = `SELECT languages.language FROM languages INNER JOIN hostlangs ON hostlangs.host_id=$1 WHERE languages.id=hostlangs.lang_id;`
+  let data, formattedData;
+
+  pool.query(hostsQueryString, [ host], (err, result1) => {
+    if ( err ) {
+      console.error(err.message)
+    }
+    pool.query(langQueryString, [ host ], (err, result2) => {
+      if ( err ) {
+        return console.error(err.message)
+      }
+      data = [ result1.rows, result2.rows ]
+      formattedData = formatData(data, host)
+      cb(formattedData)
     })
   })
 }
@@ -87,4 +107,5 @@ module.exports = {
   pool,
   getLastHostEntry,
   getRandomHost,
+  getHost
 }
