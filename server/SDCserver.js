@@ -16,13 +16,16 @@ app.use(bodyParser.json());app.use(bodyParser.urlencoded())
 
 /********************* ROUTES ACCESSING POSTGRES ************************/
 
-app.get('/postgres/lastEntry', (req, res) => {
+app.get('/postgres/lastentry', (req, res) => {
   getLastHostEntry((data) => {
     if (!data) {
       console.log('error retrieving last entry')
       return res.send(400)
     }
-    return res.send(data)
+    // last array will contain
+    for ( let obj in data )
+
+    return res.send(200)
   })
 })
 

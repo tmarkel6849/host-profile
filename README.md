@@ -32,7 +32,15 @@ PSQL_PASSWORD=''
 4. run script 'psql-setup' to setup the database
 5. Navigate to the /SDCpostgreSQL/seeds folder
   - In each of the seeds uncomment the function invocation at the end of the file, and run the file with node.  After          running the script make sure to comment out the function invokation to ensure extra seeding won't take place.
-6. Enter your postgreSQL chell and run the following commands seperatly:
+7. In your postgreSQL shell run the following commands to establish index based on the host id:
+```
+CREATE INDEX hosts_table ON hosts(id);
+CREATE INDEX cohosts_table ON cohosts(host_id);
+CREATE INDEX hostlangs_table ON hostlangs(host_id);
+```
+*** Remember that if you decide to drop the database the indexes will go with it ***
+<!-- 6. Enter your postgreSQL chell and run the following commands seperatly:
+
 ```
 CREATE FUNCTION getlangs(id NUMERIC)
 RETURNS TABLE(language VARCHAR) AS $$
@@ -47,9 +55,9 @@ SELECT DISTINCT hosts.id, hosts.name, hosts.description, hosts.interaction, host
 INNER JOIN cohosts ON cohosts.host_id = $1
 WHERE hosts.id = $1 OR hosts.id = cohosts.cohost_id;
 $$ LANGUAGE 'sql';
-```
-7. run script 'react-dev' to startup webpack
-8. run script 'start-sdc' to startup the server
+``` -->
+6. run script 'react-dev' to startup webpack
+7. run script 'start-sdc' to startup the server
 
 ## Requirements
 

@@ -27,9 +27,10 @@ export default class Host extends React.Component {
   // }
 
   getHost() {
-    fetch('/postgres')
+    fetch('/postgres/lastentry')
       .then(response => response.json())
       .then(result => {
+        // make return fit the following: ob1 is primary, following are cohosts
         this.setState({
           id: result.id,
           name: result.name,
@@ -47,7 +48,6 @@ export default class Host extends React.Component {
 
   render() {
     const length = Object.keys(state.coHosts).length;
-
     let greeting = length > 0 ? 'Meet your hosts': 'Meet your host';
 
     return (

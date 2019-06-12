@@ -16,9 +16,9 @@ const pool = new Pool ({
 
 const getLastHostEntry = (cb) => {
   const hostsQueryString = `SELECT * FROM gethost($1)`,
-        langQueryString = `SELECT * FROM getlangs($1)`
-  let hostId = [hostTotal],
-      data
+        langQueryString = `SELECT * FROM getlangs($1)`,
+        hostId = [ hostTotal ]
+  let data
 
   pool.query(hostsQueryString, hostId, (err, result1) => {
     if ( err ) {
@@ -37,8 +37,8 @@ const getLastHostEntry = (cb) => {
 
 const getRandomHost = (cb) => {
   const randomHostId = [ Math.ceil(Math.random() * hostTotal) ],
-        hostsQueryString = `SELECT * FROM gethost($1);`,
-        langQueryString = `SELECT * FROM getlangs($1);`
+        hostsQueryString = `SELECT hosts.name FROM hosts INNER JOIN cohosts ON cohosts.host_id=$1 WHERE hosts.id=$1 OR hosts.id=cohosts.cohost_id;`,
+        langQueryString = `SELECT languages.language FROM languages INNER JOIN hostlangs ON hostlangs.host_id=$1 WHERE languages.id=hostlangs.lang_id;`
   let data;
 
   pool.query(hostsQueryString, randomHostId, (err, result1) => {
@@ -55,6 +55,8 @@ const getRandomHost = (cb) => {
   })
 }
 
+getLastHostEntry(()=>{})
+
 /******************* EXPORTS *******************/
 
 module.exports = {
@@ -62,19 +64,3 @@ module.exports = {
   getLastHostEntry,
   getRandomHost
 }
-
-
-/*************** postgres functions ***************/
-// CREATE FUNCTION getlangs(id NUMERIC)
-// RETURNS TABLE(language VARCHAR) AS $$
-// SELECT languages.language FROM languages
-// INNER JOIN hostlangs ON hostlangs.host_id = $1
-// WHERE languages.id = hostlangs.lang_id;
-// $$ LANGUAGE 'sql';
-
-// CREATE FUNCTION gethost(id NUMERIC)
-// RETURNS TABLE(id INTEGER, name VARCHAR, description VARCHAR, interaction VARCHAR, datejoined VARCHAR, responserate VARCHAR, responsetime VARCHAR, hosturl VARCHAR) AS $$
-// SELECT DISTINCT hosts.id, hosts.name, hosts.description, hosts.interaction, hosts.datejoined, hosts.responserate, hosts.responsetime, hosts.hosturl FROM hosts
-// INNER JOIN cohosts ON cohosts.host_id = $1
-// WHERE hosts.id = $1 OR hosts.id = cohosts.cohost_id;
-// $$ LANGUAGE 'sql';
