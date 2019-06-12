@@ -14,4 +14,3 @@ seedLanguages = () => {
 }
 
 module.exports.langSeed = seedLanguages
-// seedLanguages();

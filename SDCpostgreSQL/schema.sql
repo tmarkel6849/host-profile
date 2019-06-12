@@ -23,12 +23,12 @@ CREATE TABLE languages (
 
 CREATE TABLE hostlangs (
   id SERIAL NOT NULL,
-  host_id SMALLINT NOT NULL,
-  lang_id SMALLINT NOT NULL
+  host_id INTEGER NOT NULL,
+  lang_id INTEGER NOT NULL
 );
 
 CREATE TABLE cohosts (
   id SERIAL NOT NULL,
-  host_id SMALLINT NOT NULL,
-  cohost_id SMALLINT NOT NULL
+  host_id INTEGER NOT NULL,
+  cohost_id INTEGER NOT NULL
 );

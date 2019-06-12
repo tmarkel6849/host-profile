@@ -1,12 +1,17 @@
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const { pool } = require('../index.js')
-let { lastSeededHost } = require('./seeder.js')
-let { lastSeededJoin } = require('./seeder.js')
+const createCsvWriter = require('csv-writer').createObjectCsvWriter,
+      { pool } = require('../index.js'),
+      fs = require('fs')
 
+let { lastSeededJoin } = require('./seeder.js'),
+    { transactionCount } = require('./seeder.js'),
+    { totalHosts } = require('./seeder.js'),
+    { transaction } = require('./seeder.js'),
+    { transactions } = require('./seeder.js')
 
 /*********************** GLOBAL VARIABLES ************************/
 
-const maxCohosts = 2
+const maxCohosts = 2,
+      path = '../csv/cohosts.csv'
 
 /*********************** FUNCTIONS TO CREATE ENTRIES *************************/
 
@@ -14,13 +19,13 @@ const numberOfCohosts = () => {
   return Math.floor(Math.random() * (maxCohosts+1))
 }
 
-const coHostIdx = (host_id, firstCohost) => {
-  let randomIdx = Math.ceil(Math.random() * lastSeededHost)
+const coHostIdx = (currentHostId, firstCohost) => {
+  let randomIdx = Math.ceil(Math.random() * totalHosts)
   while( true ) {
-    if ( randomIdx === host_id ) {
-      randomIdx = Math.ceil(Math.random() * lastSeededHost)
+    if ( randomIdx === currentHostId ) {
+      randomIdx = Math.ceil(Math.random() * totalHosts)
     } else if ( randomIdx === firstCohost ) {
-      randomIdx = Math.ceil(Math.random() * lastSeededHost)
+      randomIdx = Math.ceil(Math.random() * totalHosts)
     } else {
       break
     }
@@ -29,7 +34,7 @@ const coHostIdx = (host_id, firstCohost) => {
 }
 
 const cohostEntry = (host_id, firstCohost) => {
-  let cohost_id = coHostIdx(host_id, firstCohost);
+  let cohost_id = coHostIdx(host_id, firstCohost)
   return { host_id, cohost_id }
 }
 
@@ -43,11 +48,10 @@ const csvWriter = createCsvWriter({
   ]
 })
 
-const createCsvAndSeed = (transaction) => {
+const createCsvAndSeed = (lastSeededJoin) => {
   let entries = [],
       firstCohost,
       numOfCohosts
-      console.log('entering csv loop')
   for ( let i = 0; i < transaction; i++ ) {
     numOfCohosts = numberOfCohosts()
     if ( numOfCohosts === 0 ) {
@@ -61,22 +65,30 @@ const createCsvAndSeed = (transaction) => {
     }
     lastSeededJoin++
   }
-  console.log('going to write csv....')
   csvWriter.writeRecords(entries)
   .then(() => {
     console.log('cohosts csv written...')
-    seedCohosts()
+    seedCohosts(createCsvAndSeed, lastSeededJoin)
   })
 }
 
-const seedCohosts = () => {
+const seedCohosts = (cb, lastSeededJoin) => {
   const queryString = "COPY cohosts(host_id, cohost_id) FROM '/Users/trevormarkel/Documents/Galvanize/SDC1/host-profile/SDCpostgreSQL/csv/cohosts.csv' DELIMITER ',' CSV HEADER"
   pool.query(queryString, (err, result) => {
-    if (err) {
-      return console.error(err.message)
+    if ( err ) {
+      return console.error('error for cohosts seed: ', err.message)
     }
-    console.log('cohosts table seeded...')
+    console.log('cohosts table seeded #' + transactionCount)
+    fs.unlink(path, ( err ) => {
+      if ( err ) {
+        return console.error(err.message)
+      }
+    })
+    if ( transactionCount < transactions ) {
+      ++transactionCount
+      cb(lastSeededJoin)
+    }
   })
 }
 
-module.exports.cohostsSeed = createCsvAndSeed
+createCsvAndSeed(lastSeededJoin)

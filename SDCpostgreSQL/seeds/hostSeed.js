@@ -1,10 +1,16 @@
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const hostData = require('../../db/hosts.js');
-const { pool } = require('../index.js')
+const createCsvWriter = require('csv-writer').createObjectCsvWriter,
+      hostData = require('../../db/hosts.js'),
+      { pool } = require('../index.js'),
+      fs = require('fs')
+
+let { transactionCount } = require('./seeder.js'),
+    { transaction } = require('./seeder.js'),
+    { transactions } = require('./seeder.js')
 
 /******************** GLOBAL VARIABLES ********************/
 
-const hostDataEntries = Object.keys(hostData).length
+const hostDataEntries = Object.keys(hostData).length,
+      path = '../csv/hosts.csv'
 
 /******************** FUNCTIONS TO CREATE ENTRIES ************************/
 
@@ -37,30 +43,35 @@ const csvWriter = createCsvWriter({
   ]
 })
 
-const createCsvAndSeed = (amount) => {
+const createCsvAndSeed = () => {
   const entries = []
-  for ( let i = 0; i < amount; i++ ) {
+  for ( let i = 0; i < transaction; i++ ) {
     entries.push(hostEntry())
   }
   csvWriter.writeRecords(entries)
     .then(() => {
       console.log('hosts csv created...')
-      seedHosts()
+      seedHosts(createCsvAndSeed)
     })
 }
 
-const seedHosts = () => {
+const seedHosts = (cb) => {
   const queryString = "COPY hosts(name, description, interaction, datejoined, responserate, responsetime, hosturl) FROM '/Users/trevormarkel/Documents/Galvanize/SDC1/host-profile/SDCpostgreSQL/csv/hosts.csv' DELIMITER ',' CSV HEADER"
   pool.query(queryString, (err, result) => {
     if (err) {
-      return console.error(err.message)
+      return console.error('error message from hosts seed: ', err.message)
     }
-    console.log('hosts table seeded...')
+    console.log('hosts table seed #' + transactionCount)
+    fs.unlink(path, (err) => {
+      if (err) {
+        return console.error(err.message)
+      }
+    })
+    if (transactionCount < transactions) {
+      ++transactionCount
+      cb()
+    }
   })
 }
 
-// createCsvAndSeed(10)
-
-/***************** EXPORTS ********************/
-
-module.exports.hostSeed = createCsvAndSeed
+// createCsvAndSeed(transaction)
