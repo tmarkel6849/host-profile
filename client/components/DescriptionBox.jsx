@@ -2,8 +2,8 @@ import React from 'react';
 import CoHosts from './CoHosts.jsx';
 
 export default function DescriptionBox(props) {
-  
-  if (props.interaction === '') {
+
+  if (props.interaction === 'none') {
     return (
       <div id='description-box'>
         <div id='hi-im'>Hi, I'm {props.name}</div>
@@ -21,5 +21,5 @@ export default function DescriptionBox(props) {
         <CoHosts coHosts={props.coHosts} />
       </div>
     );
-  }  
+  }
 }

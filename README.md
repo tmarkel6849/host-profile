@@ -20,9 +20,9 @@ System design for optimizing server response for requests per second while retri
 - See below:
 ```
 PORT=<Port number here>
-PSQL_USER=''
-PSQL_HOST=''
-PSQL_PASSWORD=''
+PSQL_USER=<YOUR SUPERUSER>
+PSQL_HOST=<YOUR HOST>
+PSQL_PASSWORD=<YOUR PASSWORD>
 ```
 3. In the package.json, add your username to the 'psql-setup' script
 - See below:

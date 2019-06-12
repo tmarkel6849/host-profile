@@ -16,10 +16,10 @@ export default function CoHosts(props) {
         {coHostsArray.map((coHost, i) => {
           return (
             <div className={(i < length - 1 ? 'cohost' : 'cohost-last')} key={i}>
-              <img className='cohost-picture' src={coHost.coHostUrl} />
+              <img className='cohost-picture' src={coHost.hosturl} />
               <div className='cohost-info'>
-                <div className='cohost-name'>{coHost.coHostName}</div>
-                <div className='cohost-date-joined'>Joined in {coHost.coHostDateJoined}</div>
+                <div className='cohost-name'>{coHost.name}</div>
+                <div className='cohost-date-joined'>Joined in {coHost.datejoined}</div>
               </div>
             </div>
           );
