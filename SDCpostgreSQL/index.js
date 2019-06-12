@@ -43,7 +43,7 @@ const formatData = (array, host_id) => {
 const getLastHostEntry = (cb) => {
   const hostsQueryString = `SELECT DISTINCT hosts.id, hosts.name, hosts.description, hosts.interaction, hosts.datejoined, hosts.responserate, hosts.responsetime, hosts.hosturl FROM hosts INNER JOIN cohosts ON cohosts.host_id=$1 WHERE hosts.id=$1 OR hosts.id=cohosts.cohost_id;`,
         langQueryString = `SELECT DISTINCT languages.language FROM languages INNER JOIN hostlangs ON hostlangs.host_id=$1 WHERE languages.id=hostlangs.lang_id;`
-  let data
+  let data, formattedData
 
   pool.query(hostsQueryString, [ totalHosts ], (err, result1) => {
     if ( err ) {
