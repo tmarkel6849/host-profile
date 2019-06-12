@@ -91,4 +91,4 @@ const seedCohosts = (cb, lastSeededJoin) => {
   })
 }
 
-createCsvAndSeed(lastSeededJoin)
+// createCsvAndSeed(lastSeededJoin)

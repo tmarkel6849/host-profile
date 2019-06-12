@@ -62,3 +62,19 @@ module.exports = {
   getLastHostEntry,
   getRandomHost
 }
+
+
+/*************** postgres functions ***************/
+// CREATE FUNCTION getlangs(id NUMERIC)
+// RETURNS TABLE(language VARCHAR) AS $$
+// SELECT languages.language FROM languages
+// INNER JOIN hostlangs ON hostlangs.host_id = $1
+// WHERE languages.id = hostlangs.lang_id;
+// $$ LANGUAGE 'sql';
+
+// CREATE FUNCTION gethost(id NUMERIC)
+// RETURNS TABLE(id INTEGER, name VARCHAR, description VARCHAR, interaction VARCHAR, datejoined VARCHAR, responserate VARCHAR, responsetime VARCHAR, hosturl VARCHAR) AS $$
+// SELECT DISTINCT hosts.id, hosts.name, hosts.description, hosts.interaction, hosts.datejoined, hosts.responserate, hosts.responsetime, hosts.hosturl FROM hosts
+// INNER JOIN cohosts ON cohosts.host_id = $1
+// WHERE hosts.id = $1 OR hosts.id = cohosts.cohost_id;
+// $$ LANGUAGE 'sql';

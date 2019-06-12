@@ -88,4 +88,4 @@ const seedHostLangs = (cb, lastSeededJoin) => {
   })
 }
 
-// createCsvAndSeed(lastSeededJoin, transaction)
+// createCsvAndSeed(lastSeededJoin)

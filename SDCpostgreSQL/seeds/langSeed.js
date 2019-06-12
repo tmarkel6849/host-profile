@@ -12,3 +12,5 @@ seedLanguages = () => {
     console.log('languages table seeded...');
   }
 }
+
+// seedLanguages()
