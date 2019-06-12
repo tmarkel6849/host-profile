@@ -4,7 +4,6 @@ CREATE DATABASE hostprofiles;
 
 \c hostprofiles;
 
--- remove the language fiels since there will be a join table instead
 CREATE TABLE hosts (
   id SERIAL NOT NULL,
   name VARCHAR NOT NULL,

@@ -12,5 +12,3 @@ seedLanguages = () => {
     console.log('languages table seeded...');
   }
 }
-
-module.exports.langSeed = seedLanguages

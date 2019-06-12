@@ -1,6 +1,6 @@
 require('dotenv').config()
-const { Pool } = require('pg')
-const { hostTotal } = require('./seeds/hostSeed.js')
+const { Pool } = require('pg'),
+      { hostTotal } = require('./seeds/hostSeed.js')
 
 /******************* DATABASE CONNECTION ********************/
 
@@ -13,7 +13,6 @@ const pool = new Pool ({
 })
 
 /******************* Queries **********************/
-//gethost, getlangs psql functions
 
 const getLastHostEntry = (cb) => {
   const hostsQueryString = `SELECT * FROM gethost($1)`,
@@ -58,6 +57,8 @@ const getRandomHost = (cb) => {
 
 /******************* EXPORTS *******************/
 
-module.exports.pool = pool
-module.exports.getLastHostEntry = getLastHostEntry
-module.exports.getRandomHost = getRandomHost
+module.exports = {
+  pool,
+  getLastHostEntry,
+  getRandomHost
+}

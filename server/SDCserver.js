@@ -1,13 +1,13 @@
 require('dotenv').config()
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const path = require('path')
-const { getLastHostEntry } = require('../SDCpostgreSQL/index.js')
-const { getRandomHost } = require('../SDCpostgreSQL/index.js')
+const express = require('express'),
+      bodyParser = require('body-parser'),
+      cors = require('cors'),
+      path = require('path'),
+      { getLastHostEntry } = require('../SDCpostgreSQL/index.js'),
+      { getRandomHost } = require('../SDCpostgreSQL/index.js')
 
-const port = process.env.PORT || 3005;
-const app = express()
+const port = process.env.PORT || 3005,
+      app = express()
 
 app.use(cors())
 app.use(express.static(path.join(__dirname + '/../public')))
@@ -36,11 +36,7 @@ app.get('/postgres/randomEntry', (req, res) => {
   })
 })
 
-/******************** ROUTE ACCESSING MONGODB ***********************/
-
-
-
-/******************** LISTIN! **********************/
+/******************** HEY! LISTIN!! **********************/
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
