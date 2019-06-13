@@ -57,7 +57,7 @@ WHERE hosts.id = $1 OR hosts.id = cohosts.cohost_id;
 $$ LANGUAGE 'sql';
 ``` -->
 6. run script 'react-dev' to startup webpack
-7. run script 'start-sdc' to startup the server
+7. run script 'server-sdc' to startup the server
 
 ## Requirements
 

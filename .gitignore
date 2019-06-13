@@ -29,3 +29,6 @@ dist/
 # csv files
 csv/
 *.csv
+
+newrelic.js
+newrelic_agent.log
