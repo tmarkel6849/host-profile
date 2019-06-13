@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { Pool } = require('pg'),
-      { hostTotal } = require('./seeds/hostSeed.js')
+      { totalHosts } = require('./seeds/seeder.js')
 
 /******************* DATABASE CONNECTION ********************/
 
@@ -12,45 +12,91 @@ const pool = new Pool ({
   port: 5432,
 })
 
-/******************* Queries **********************/
+/******************* HELPER FUNCTION TO FORMAT DATA SERVER WILL SEND ***********************/
+
+const formatData = (array, host_id) => {
+  let data = { cohosts: {}, languages: {} },
+      cohosts = 0,
+      languages = 0
+  for ( let arr of array ) {
+    for ( let obj of arr ) {
+      if ( !obj.language ) {
+        if ( obj.id === host_id ) {
+          data.host = obj
+        } else {
+          data.cohosts[`cohost${++cohosts}`] = {
+            name: obj.name,
+            datejoined: obj.datejoined,
+            hosturl: obj.hosturl
+          }
+        }
+      } else {
+        data.languages[`language${++languages}`] = obj.language
+      }
+    }
+  }
+  return data
+}
+
+/******************* QUERY FUNCTIONS **********************/
 
 const getLastHostEntry = (cb) => {
-  const hostsQueryString = `SELECT * FROM gethost($1)`,
-        langQueryString = `SELECT * FROM getlangs($1)`
-  let hostId = [hostTotal],
-      data
+  const hostsQueryString = `SELECT DISTINCT hosts.id, hosts.name, hosts.description, hosts.interaction, hosts.datejoined, hosts.responserate, hosts.responsetime, hosts.hosturl FROM hosts INNER JOIN cohosts ON cohosts.host_id=$1 WHERE hosts.id=$1 OR hosts.id=cohosts.cohost_id;`,
+        langQueryString = `SELECT DISTINCT languages.language FROM languages INNER JOIN hostlangs ON hostlangs.host_id=$1 WHERE languages.id=hostlangs.lang_id;`
+  let data, formattedData
 
-  pool.query(hostsQueryString, hostId, (err, result1) => {
+  pool.query(hostsQueryString, [ totalHosts ], (err, result1) => {
     if ( err ) {
       return console.error(err.message)
     }
-    pool.query(langQueryString, hostId, (err, result2) => {
+    pool.query(langQueryString, [ totalHosts ], (err, result2) => {
       if ( err ) {
         return console.error(err.message)
       }
-      data = [result1.rows, result2.rows]
-      console.log('results are in.... ', data)
-      cb(data)
+      data = [ result1.rows, result2.rows ]
+      formattedData = formatData(data, totalHosts)
+      cb(formattedData)
     })
   })
 }
 
 const getRandomHost = (cb) => {
-  const randomHostId = [ Math.ceil(Math.random() * hostTotal) ],
-        hostsQueryString = `SELECT * FROM gethost($1);`,
-        langQueryString = `SELECT * FROM getlangs($1);`
-  let data;
+  const hostsQueryString = `SELECT DISTINCT hosts.id, hosts.name, hosts.description, hosts.interaction, hosts.datejoined, hosts.responserate, hosts.responsetime, hosts.hosturl FROM hosts INNER JOIN cohosts ON cohosts.host_id=$1 WHERE hosts.id=$1 OR hosts.id=cohosts.cohost_id;`,
+        langQueryString = `SELECT languages.language FROM languages INNER JOIN hostlangs ON hostlangs.host_id=$1 WHERE languages.id=hostlangs.lang_id;`,
+        randomHostId = Math.ceil(Math.random() * totalHosts)
+  let data, formattedData;
 
-  pool.query(hostsQueryString, randomHostId, (err, result1) => {
+  pool.query(hostsQueryString, [ randomHostId ], (err, result1) => {
     if ( err ) {
       console.error(err.message)
     }
-    pool.query(langQueryString, randomHostId, (err, result2) => {
+    pool.query(langQueryString, [ randomHostId ], (err, result2) => {
       if ( err ) {
         return console.error(err.message)
       }
-      data = [result1.rows, result2.rows]
-      return cb(data)
+      data = [ result1.rows, result2.rows ]
+      formattedData = formatData(data, randomHostId)
+      cb(formattedData)
+    })
+  })
+}
+
+const getHost = (host, cb) => {
+  const hostsQueryString = `SELECT DISTINCT hosts.id, hosts.name, hosts.description, hosts.interaction, hosts.datejoined, hosts.responserate, hosts.responsetime, hosts.hosturl FROM hosts INNER JOIN cohosts ON cohosts.host_id=$1 WHERE hosts.id=$1 OR hosts.id=cohosts.cohost_id;`,
+    langQueryString = `SELECT languages.language FROM languages INNER JOIN hostlangs ON hostlangs.host_id=$1 WHERE languages.id=hostlangs.lang_id;`
+  let data, formattedData;
+
+  pool.query(hostsQueryString, [ host], (err, result1) => {
+    if ( err ) {
+      console.error(err.message)
+    }
+    pool.query(langQueryString, [ host ], (err, result2) => {
+      if ( err ) {
+        return console.error(err.message)
+      }
+      data = [ result1.rows, result2.rows ]
+      formattedData = formatData(data, host)
+      cb(formattedData)
     })
   })
 }
@@ -60,21 +106,6 @@ const getRandomHost = (cb) => {
 module.exports = {
   pool,
   getLastHostEntry,
-  getRandomHost
+  getRandomHost,
+  getHost
 }
-
-
-/*************** postgres functions ***************/
-// CREATE FUNCTION getlangs(id NUMERIC)
-// RETURNS TABLE(language VARCHAR) AS $$
-// SELECT languages.language FROM languages
-// INNER JOIN hostlangs ON hostlangs.host_id = $1
-// WHERE languages.id = hostlangs.lang_id;
-// $$ LANGUAGE 'sql';
-
-// CREATE FUNCTION gethost(id NUMERIC)
-// RETURNS TABLE(id INTEGER, name VARCHAR, description VARCHAR, interaction VARCHAR, datejoined VARCHAR, responserate VARCHAR, responsetime VARCHAR, hosturl VARCHAR) AS $$
-// SELECT DISTINCT hosts.id, hosts.name, hosts.description, hosts.interaction, hosts.datejoined, hosts.responserate, hosts.responsetime, hosts.hosturl FROM hosts
-// INNER JOIN cohosts ON cohosts.host_id = $1
-// WHERE hosts.id = $1 OR hosts.id = cohosts.cohost_id;
-// $$ LANGUAGE 'sql';
