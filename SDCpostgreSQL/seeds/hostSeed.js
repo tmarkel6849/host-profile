@@ -74,4 +74,4 @@ const seedHosts = (cb) => {
   })
 }
 
-createCsvAndSeed(transaction)
+// createCsvAndSeed(transaction)

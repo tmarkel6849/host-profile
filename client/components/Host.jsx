@@ -48,7 +48,6 @@ export default class Host extends React.Component {
   }
 
   render() {
-    // const state = this.state;
     const length = Object.keys(this.state.coHosts).length;
     let greeting = length > 0 ? 'Meet your hosts': 'Meet your host';
 
