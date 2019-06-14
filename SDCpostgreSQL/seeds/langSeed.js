@@ -13,4 +13,4 @@ seedLanguages = () => {
   }
 }
 
-// seedLanguages()
+seedLanguages()

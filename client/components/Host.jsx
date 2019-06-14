@@ -26,7 +26,7 @@ export default class Host extends React.Component {
   }
 
   getHost() {
-    fetch('/postgres/randomentry')
+    fetch(`http://${window.location.hostname}:3005/postgres/randomentry`)
       .then(response => response.json())
       .then(result => {
         let host = result.host,
@@ -48,8 +48,8 @@ export default class Host extends React.Component {
   }
 
   render() {
-    const state = this.state;
-    const length = Object.keys(state.coHosts).length;
+    // const state = this.state;
+    const length = Object.keys(this.state.coHosts).length;
     let greeting = length > 0 ? 'Meet your hosts': 'Meet your host';
 
     return (
