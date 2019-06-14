@@ -18,13 +18,13 @@ const hostIdx = () => Math.floor(Math.random() * hostDataEntries);
 
 const hostEntry = () => {
   return {
-    name: hostData[hostIdx()].name,
-    description: hostData[hostIdx()].description,
-    interaction: hostData[hostIdx()].interaction || 'none',
-    datejoined: hostData[hostIdx()].dateJoined || 'none',
-    responserate: hostData[hostIdx()].responseRate,
-    responsetime: hostData[hostIdx()].responseTime,
-    hosturl: hostData[hostIdx()].hostUrl,
+    name: hostData[ hostIdx() ].name,
+    description: hostData[ hostIdx() ].description,
+    interaction: hostData[ hostIdx() ].interaction || 'none',
+    datejoined: hostData[ hostIdx() ].dateJoined || 'none',
+    responserate: hostData[ hostIdx() ].responseRate,
+    responsetime: hostData[ hostIdx() ].responseTime,
+    hosturl: hostData[ hostIdx() ].hostUrl,
   }
 }
 
@@ -58,20 +58,20 @@ const createCsvAndSeed = () => {
 const seedHosts = (cb) => {
   const queryString = "COPY hosts(name, description, interaction, datejoined, responserate, responsetime, hosturl) FROM '/Users/trevormarkel/Documents/Galvanize/SDC1/host-profile/SDCpostgreSQL/csv/hosts.csv' DELIMITER ',' CSV HEADER"
   pool.query(queryString, (err, result) => {
-    if (err) {
+    if ( err ) {
       return console.error('error message from hosts seed: ', err.message)
     }
     console.log('hosts table seed #' + transactionCount)
     fs.unlink(path, (err) => {
-      if (err) {
+      if ( err ) {
         return console.error(err.message)
       }
     })
-    if (transactionCount < transactions) {
+    if ( transactionCount < transactions ) {
       ++transactionCount
       cb()
     }
   })
 }
 
-// createCsvAndSeed(transaction)
+createCsvAndSeed(transaction)

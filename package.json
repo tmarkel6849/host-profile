@@ -12,18 +12,18 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --colors",
-    "loadtest": "loadtest -c 10 --rps 200 -k http://localhost:3005/"
+    "loadtest": "loadtest -c 100 --rps 1000 -k http://localhost:3005/"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fourprofessionalguys/host-profile.git"
   },
-  "author": "rpropri",
+  "author": "rpropri / tmarkel6849",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fourprofessionalguys/host-profile/issues"
+    "url": "https://github.com/tmarkel6849/host-profile/issues"
   },
-  "homepage": "https://github.com/fourprofessionalguys/host-profile#readme",
+  "homepage": "https://github.com/tmarkel6849/host-profile#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
