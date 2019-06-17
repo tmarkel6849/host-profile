@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Host from './components/Host.jsx';
-import style from './main.scss';
+// import style from './main.scss';
 
 class App extends React.Component {
   constructor(props) {
@@ -21,4 +21,6 @@ class App extends React.Component {
   }
 };
 
-ReactDOM.render(<App />, document.getElementById('host'));
+ReactDOM.hydrate(<App />, document.getElementById('host'));
+
+export default App
