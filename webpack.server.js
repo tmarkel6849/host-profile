@@ -8,7 +8,7 @@ module.exports = {
   externals: [nodeExternals()],
   entry: ['./server/SDCserver.js'],
   output: {
-    path: path.resolve(__dirname + 'server'),
+    path: path.resolve(__dirname + '/server'),
     filename: 'serverSSR.js',
     publicPath: '/'
   },
@@ -26,6 +26,11 @@ module.exports = {
             'transform-class-properties'
           ]
         }
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
       },
       {
         test: /\.scss$/,

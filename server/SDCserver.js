@@ -1,10 +1,6 @@
 require('newrelic')
 require('dotenv').config()
 
-import React from 'react'
-import ReactDomServer from 'react-dom/server'
-import App from '../client/App.jsx'
-
 const express = require('express'),
       bodyParser = require('body-parser'),
       cors = require('cors'),
@@ -14,6 +10,7 @@ const express = require('express'),
       { getRandomHost } = require('../SDCpostgreSQL/index.js'),
       { getHost } = require('../SDCpostgreSQL/index.js')
 
+import renderer from './renderer'
 
 const port = process.env.PORT || 3005,
       app = express()
@@ -22,20 +19,12 @@ app.use(cors())
 app.use(express.static(path.join(__dirname + '/../public')))
 app.use(bodyParser.json());app.use(bodyParser.urlencoded())
 
-
 /********************* ROUTES ACCESSING POSTGRES ************************/
 
 app.get('/', (req, res) => {
-  const app = ReactDomServer.rendorToString(<App />),
-        indexFile = path.resolve('../public/index.html')
-  fs.readFile(indexFile, 'utf8', (err, data) => {
-    if ( err ) {
-      console.error('error trying to SSR: ', err.message)
-      return res.status.length(500).send('Shucks, thought we had it....')
-    }
-    return res.send(
-      data.replace(`<div id="host"> </div>`, `<div id="host">${app}</div>`)
-    )
+  fs.readFile('../public/index.html', 'utf8', (err, data) => {
+    const html = renderer(data);
+    res.send(html)
   })
 })
 
