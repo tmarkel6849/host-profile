@@ -2,21 +2,22 @@ import React from 'react';
 import PhotoBoxContainer from './PhotoBoxContainer.jsx';
 import DescriptionBox from './DescriptionBox.jsx';
 import StatsBox from './StatsBox.jsx';
+// import style from './main.scss';
 
 export default class Host extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.id || -1,
-      name: '',
-      description: '',
-      interaction: '',
-      coHosts: {},
-      dateJoined: '',
-      languages: [],
-      responseRate: '',
-      responseTime: '',
-      hostUrl: ''
+      id: props.data.host.id,
+      name: props.data.host.name,
+      description: props.data.host.description,
+      interaction: props.data.host.interaction,
+      coHosts: props.data.cohosts,
+      dateJoined: props.data.host.datejoined,
+      languages: props.data.languages,
+      responseRate: props.data.host.responserate,
+      responseTime: props.data.host.responsetime,
+      hostUrl: props.data.host.hosturl
     };
     this.getHost = this.getHost.bind(this);
   }

@@ -21,4 +21,6 @@ class App extends React.Component {
   }
 };
 
-ReactDOM.render(<App />, document.getElementById('host'));
+ReactDOM.hydrate(<App />, document.getElementById('host'));
+
+export default App
