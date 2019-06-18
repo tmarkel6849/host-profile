@@ -6,7 +6,7 @@
     "start": "node server/server.js",
     "server-sdc": "nodemon server/SDCserver.js",
     "react-dev": "webpack -d --watch",
-    "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
+    "build:server": "webpack --config webpack.server.js --watch",
     "dev:start": "nodemon ./server-build/index.js",
     "dev": "npm-run-all --parallel build dev:*",
     "seed": "npx knex migrate:rollback; npx knex migrate:latest; npx knex seed:run",

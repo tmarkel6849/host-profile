@@ -22,9 +22,11 @@ app.use(bodyParser.json());app.use(bodyParser.urlencoded())
 /********************* ROUTES ACCESSING POSTGRES ************************/
 
 app.get('/', (req, res) => {
-  fs.readFile('../public/index.html', 'utf8', (err, data) => {
-    const html = renderer(data);
-    res.send(html)
+  getRandomHost((props) => {
+    fs.readFile('../public/index.html', 'utf8', (err, data) => {
+      const html = renderer(data, props);
+      res.send(html)
+    })
   })
 })
 
