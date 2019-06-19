@@ -3,7 +3,7 @@ const path = require('path'),
       nodeExternals = require('webpack-node-externals')
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   target: 'node',
   externals: [nodeExternals()],
   entry: ['./server/SDCserver.js'],
