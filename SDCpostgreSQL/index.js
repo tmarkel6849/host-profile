@@ -4,16 +4,8 @@ const { Pool } = require('pg'),
 
 /******************* DATABASE CONNECTION ********************/
 
-const pool = process.env.NODE_ENV !== 'production'
-? new Pool ({
-  user: process.env.PSQL_USER,
-  host: process.env.PSQL_HOST,
-  database: 'hostprofiles',
-  password: process.env.PSQL_PASSWORD,
-  port: 5432,
-})
-: new Pool ({
-  connectionString: process.env.PSQL_CONNECTION_STRING
+const pool =  new Pool ({
+  connectionString: 'postgresql://postgres:sdc@ec2-52-27-91-99.us-west-2.compute.amazonaws.com:5432/hostprofiles'
 })
 
 /******************* HELPER FUNCTION ***********************/
