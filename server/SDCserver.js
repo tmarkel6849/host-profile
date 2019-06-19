@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/proxy', (req, res) => {
-  let hostId = 75874
+  let hostId = req.params.hostId
   getHost(hostId, (props) => {
     fs.readFile('../public/proxy.html', 'utf8', (err, data) => {
       if ( err ) {
