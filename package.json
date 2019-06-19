@@ -14,8 +14,7 @@
     "mongo-seed": "",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage --colors",
-    "loadtest": "loadtest -c 100 --rps 1000 -k http://localhost:3005/"
+    "test:coverage": "jest --coverage --colors"
   },
   "repository": {
     "type": "git",
@@ -50,6 +49,7 @@
     "postcss-loader": "^3.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "redis": "^2.8.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "validator": "^10.11.0"
